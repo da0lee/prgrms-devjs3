@@ -1,5 +1,4 @@
-const API_ENDPOINT =
-  "https://rhdd0roxs5.execute-api.ap-northeast-2.amazonaws.com/dev";
+const API_ENDPOINT ="http://localhost:4001";
 
 const api = {
   fetchCats: keyword => {

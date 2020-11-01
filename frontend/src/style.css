@@ -1,3 +1,15 @@
+:root[color-mode='light'] {
+  --element: #fff;
+  --surface: #000;
+  --primary: #01408e;
+}
+
+:root[color-mode='dark'] {
+  --element: #000;
+  --surface: #fff;
+  --primary: #8fceff;
+}
+
 @font-face {
   font-family: 'Goyang';
   src: url('/src/fonts/Goyang.woff') format('woff');
@@ -11,12 +23,22 @@ html {
 
 body * {
   font-family: Goyang;
+  background: var(--element);
+  color: var(--surface);
 }
 
 *,
 *:before,
 *:after {
   box-sizing: inherit;
+}
+
+:root[color-mode='light'] .light--hidden {
+  display: none;
+}
+
+:root[color-mode='dark'] .dark--hidden {
+  display: none;
 }
 
 #App {
@@ -39,7 +61,6 @@ body * {
 }
 
 .SearchResult .item {
-  background-color: #eee;
   display: inline-block;
   margin: 0 0 1em;
   width: 100%;
@@ -57,7 +78,7 @@ body * {
   top: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: var(--element);
 }
 
 .ImageInfo .title {
@@ -76,10 +97,10 @@ body * {
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  background-color: #fff;
-  border: 1px solid #eee;
+  background-color: var(--element);
+  border: 1px solid var(--primary);
   border-radius: 5px;
-  color: #000;
+  color: var(--element);
 }
 
 .ImageInfo .content-wrapper img {
@@ -88,19 +109,14 @@ body * {
 
 @media (prefers-color-scheme: dark) {
   body {
-    background-color: #000;
-    color: white;
+    background-color: var(--element, #000);
+    color: var(--surface, #fff);
   }
-}
-
-.dark {
-  background-color: #000;
-  color: white;
-}
-
-.light {
-  background-color: white;
-  color: #000;
+  .ImageInfo .content-wrapper {
+    background-color: var(--element, #000);
+    border: var(--primary, #8fceff);
+    color: var(--surface, #fff);
+  }
 }
 
 /* 992px 이하 */

@@ -32,6 +32,10 @@ class App {
         image: null
       }
     });
+
+    this.darkLightBtn = new DarkLightBtn({
+      $target
+    })
   }
 
   setState(nextData) {

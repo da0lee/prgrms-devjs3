@@ -3,8 +3,8 @@ class ImageInfo {
   data = null;
 
   constructor({ $target, data }) {
-    const $imageInfo = document.createElement("div");
-    $imageInfo.className = "ImageInfo";
+    const $imageInfo = document.createElement('div');
+    $imageInfo.className = 'ImageInfo';
     this.$imageInfo = $imageInfo;
     $target.appendChild($imageInfo);
 
@@ -24,19 +24,19 @@ class ImageInfo {
 
       this.$imageInfo.innerHTML = `
         <div class="content-wrapper">
-          <div class="title">
+          <h2 class="title">
             <span>${name}</span>
-            <div class="close">x</div>
-          </div>
+            <button type="button" class="close">x</button>
+          </h2>
           <img src="${url}" alt="${name}"/>        
           <div class="description">
-            <div>성격: ${temperament}</div>
-            <div>태생: ${origin}</div>
+            <p>성격: ${temperament}</p>
+            <p>태생: ${origin}</p>
           </div>
         </div>`;
-      this.$imageInfo.style.display = "block";
+      this.$imageInfo.style.display = 'block';
     } else {
-      this.$imageInfo.style.display = "none";
+      this.$imageInfo.style.display = 'none';
     }
   }
 }

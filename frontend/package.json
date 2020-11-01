@@ -6,6 +6,7 @@
   "main": "index.html",
   "scripts": {
     "test": "jest --config=jest.config.js",
+    "format": "prettier --write \"./**/*.{js,html,css}\"",
     "start": "http-server ."
   },
   "repository": {
@@ -28,7 +29,12 @@
     "@babel/core": "^7.8.3",
     "@babel/preset-env": "^7.8.3",
     "babel-jest": "^25.1.0",
+    "eslint": "^7.12.1",
+    "eslint-config-prettier": "^6.15.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-react": "^7.21.5",
     "http-server": "^0.12.3",
-    "jest": "^24.9.0"
+    "jest": "^24.9.0",
+    "prettier": "^2.1.2"
   }
 }

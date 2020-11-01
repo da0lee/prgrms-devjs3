@@ -78,12 +78,21 @@ body * {
 .ImageInfo .title {
   display: flex;
   justify-content: space-between;
-  font-size: 16px;
 }
 
 .ImageInfo .title,
 .ImageInfo .description {
   padding: 5px;
+}
+
+.ImageInfo .title h2 {
+  font-size: 1.5rem;
+}
+
+.ImageInfo .close {
+  position: absolute;
+  right: 0;
+  top: 0;
 }
 
 .ImageInfo .content-wrapper {

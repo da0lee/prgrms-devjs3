@@ -1,24 +1,25 @@
 class DarkLightBtn {
   constructor({ $target }) {
     const $darkLightBtn = document.createElement('input');
-
     this.$darkLightBtn = $darkLightBtn;
-    this.$darkLightBtn.type = 'checkbox';
-
-    $darkLightBtn.className = 'dark';
+    $darkLightBtn.type = 'checkbox';
     $target.appendChild($darkLightBtn);
 
-    $darkLightBtn.addEventListener('click', () => {
-      const $html = document.documentElement;
-      const $body = document.getElementsByTagName('body')[0];
+    const osDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: Dark)').matches;
+    let getColorMode = localStorage.getItem('color-mode');
 
-      if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        $html.classList.toggle('light');
-        $body.classList.toggle('light');
-      } else {
-        $html.classList.toggle('dark');
-        $body.classList.toggle('dark');
-      }
+    if (osDarkMode) {
+      document.documentElement.setAttribute('color-mode', 'dark');
+      localStorage.setItem('color-mode', 'dark');
+    } else {
+      document.documentElement.setAttribute('color-mode', 'light');
+      localStorage.setItem('color-mode', 'light');
+    }
+
+    $darkLightBtn.addEventListener('click', () => {
+      getColorMode = getColorMode === 'light' ? 'dark' : 'light';
+      document.documentElement.setAttribute('color-mode', getColorMode);
+      localStorage.setItem('color-mode', getColorMode);
     });
   }
 

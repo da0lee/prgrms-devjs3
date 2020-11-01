@@ -19,26 +19,18 @@
 
 html {
   box-sizing: border-box;
+  background: var(--element);
+  color: var(--surface);
 }
 
 body * {
   font-family: Goyang;
-  background: var(--element);
-  color: var(--surface);
 }
 
 *,
 *:before,
 *:after {
   box-sizing: inherit;
-}
-
-:root[color-mode='light'] .light--hidden {
-  display: none;
-}
-
-:root[color-mode='dark'] .dark--hidden {
-  display: none;
 }
 
 #App {
@@ -70,6 +62,8 @@ body * {
   width: 100%;
   font-size: 40px;
   padding: 10px 15px;
+  background-color: var(--element);
+  color: var(--surface);
 }
 
 .ImageInfo {

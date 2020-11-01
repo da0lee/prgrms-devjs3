@@ -102,3 +102,24 @@ body * {
   background-color: white;
   color: #000;
 }
+
+/* 992px 이하 */
+@media (max-width: 992px) {
+  .SearchResult {
+    grid-template-columns: repeat(3, minmax(250px, 1fr));
+  }
+}
+
+/* 768px 이하 */
+@media (max-width: 768px) {
+  .SearchResult {
+    grid-template-columns: repeat(2, minmax(250px, 1fr));
+  }
+}
+
+/* 576px 이하 */
+@media (max-width: 576px) {
+  .SearchResult {
+    grid-template-columns: repeat(1, minmax(250px, 1fr));
+  }
+}

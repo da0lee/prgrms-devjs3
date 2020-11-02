@@ -7,12 +7,14 @@
   "scripts": {
     "test": "jest --config=jest.config.js",
     "format": "prettier --write \"./**/*.{js,html,css}\"",
-    "start": "http-server ."
+    "start": "http-server .",
+    "dev" : "nodemon ./bin/www"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/learn-programmers/fe-assignment-lab.git"
   },
+  
   "keywords": [
     "programmers",
     "test",
@@ -35,6 +37,7 @@
     "eslint-plugin-react": "^7.21.5",
     "http-server": "^0.12.3",
     "jest": "^24.9.0",
+    "nodemon": "^2.0.6",
     "prettier": "^2.1.2"
   }
 }

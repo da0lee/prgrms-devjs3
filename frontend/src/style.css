@@ -177,9 +177,7 @@ input[type='checkbox']:checked ~ .darkLightSlider::after {
   }
 
   .ImageInfo .content-wrapper {
-    left: 0%;
-    top: 0%;
-    transform: translate(0%, 0%);
+    width: 100%;
   }
 }
 

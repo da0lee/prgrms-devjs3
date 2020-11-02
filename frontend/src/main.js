@@ -1,1 +1,1 @@
-new App(document.querySelector("#App"));
+new App(document.querySelector('#App'));

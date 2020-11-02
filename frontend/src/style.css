@@ -1,12 +1,12 @@
 :root[color-mode='light'] {
-  --element: #fff;
-  --surface: #000;
+  --background: #fff;
+  --color: #000;
   --primary: #01408e;
 }
 
 :root[color-mode='dark'] {
-  --element: #000;
-  --surface: #fff;
+  --background: #000;
+  --color: #fff;
   --primary: #8fceff;
 }
 
@@ -19,12 +19,12 @@
 
 html {
   box-sizing: border-box;
-  background-color: var(--element);
-  color: var(--surface);
 }
 
 body * {
   font-family: Goyang;
+  background-color: var(--background);
+  color: var(--color);
 }
 
 *,
@@ -64,7 +64,7 @@ input[type='checkbox'] {
   height: 13px;
   top: 1px;
   left: 2px;
-  background-color: var(--element);
+  background-color: var(--background);
   border-radius: 50%;
   transition: ease-in 0.2s;
 }
@@ -74,7 +74,7 @@ input[type='checkbox']:checked ~ .darkLightSlider {
 }
 
 input[type='checkbox']:checked ~ .darkLightSlider::after {
-  background-color: var(--element);
+  background-color: var(--background);
   transform: translateX(14px);
 }
 
@@ -102,8 +102,8 @@ input[type='checkbox']:checked ~ .darkLightSlider::after {
   width: 100%;
   font-size: 40px;
   padding: 10px 15px;
-  background-color: var(--element);
-  color: var(--surface);
+  background-color: var(--background);
+  color: var(--color);
 }
 
 .ImageInfo {
@@ -113,7 +113,7 @@ input[type='checkbox']:checked ~ .darkLightSlider::after {
   top: 0;
   width: 100vw;
   height: 100vh;
-  background-color: var(--element);
+  background-color: var(--background);
 }
 
 .ImageInfo .title {
@@ -141,10 +141,10 @@ input[type='checkbox']:checked ~ .darkLightSlider::after {
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  background-color: var(--element);
+  background-color: var(--background);
   border: 1px solid var(--primary);
   border-radius: 5px;
-  color: var(--element);
+  color: var(--background);
 }
 
 .ImageInfo .content-wrapper img {
@@ -153,25 +153,25 @@ input[type='checkbox']:checked ~ .darkLightSlider::after {
 
 @media (prefers-color-scheme: dark) {
   body {
-    background-color: var(--element, #000);
-    color: var(--surface, #fff);
+    background-color: var(--background, #000);
+    color: var(--color, #fff);
   }
   .ImageInfo .content-wrapper {
-    background-color: var(--element, #000);
+    background-color: var(--background, #000);
     border: 1px solid var(--primary, #8fceff);
-    color: var(--surface, #fff);
+    color: var(--color, #fff);
   }
 }
 
 /* 992px 이하 */
-@media (max-width: 992px) {
+@media screen and (max-width: 992px) {
   .SearchResult {
     grid-template-columns: repeat(3, minmax(250px, 1fr));
   }
 }
 
 /* 768px 이하 */
-@media (max-width: 768px) {
+@media screen and (max-width: 768px) {
   .SearchResult {
     grid-template-columns: repeat(2, minmax(250px, 1fr));
   }
@@ -182,7 +182,7 @@ input[type='checkbox']:checked ~ .darkLightSlider::after {
 }
 
 /* 576px 이하 */
-@media (max-width: 576px) {
+@media screen and (max-width: 576px) {
   .SearchResult {
     grid-template-columns: repeat(1, minmax(250px, 1fr));
   }

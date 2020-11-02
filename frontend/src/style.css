@@ -45,7 +45,7 @@ input[type='checkbox'] {
   -webkit-appearance: none;
 }
 
-.darkLightSpan {
+.darkLightSlider {
   position: absolute;
   top: 0;
   right: 0;
@@ -57,7 +57,7 @@ input[type='checkbox'] {
   transition: ease-in 0.2s;
 }
 
-.darkLightSpan::after {
+.darkLightSlider::after {
   content: '';
   position: absolute;
   width: 13px;
@@ -69,11 +69,11 @@ input[type='checkbox'] {
   transition: ease-in 0.2s;
 }
 
-input[type='checkbox']:checked ~ .darkLightSpan {
+input[type='checkbox']:checked ~ .darkLightSlider {
   background-color: var(--primary);
 }
 
-input[type='checkbox']:checked ~ .darkLightSpan::after {
+input[type='checkbox']:checked ~ .darkLightSlider::after {
   background-color: var(--element);
   transform: translateX(14px);
 }

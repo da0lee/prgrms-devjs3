@@ -2,18 +2,18 @@ class DarkLightBtn {
   constructor({ $target }) {
     const $darkLightLable = document.createElement('label');
     const $darkLightBtn = document.createElement('input');
-    const $darkLightSpan = document.createElement('span');
+    const $darkLightSlider = document.createElement('span');
     this.$darkLightLable = $darkLightLable;
     this.$darkLightBtn = $darkLightBtn;
-    this.$darkLightSpan = $darkLightSpan;
+    this.$darkLightSpan = $darkLightSlider;
 
     $darkLightBtn.type = 'checkbox';
     $darkLightBtn.className = 'darkLightBtn';
-    $darkLightSpan.className = 'darkLightSpan';
+    $darkLightSlider.className = 'darkLightSlider';
 
     $target.appendChild($darkLightLable);
     $darkLightLable.appendChild($darkLightBtn);
-    $darkLightLable.appendChild($darkLightSpan);
+    $darkLightLable.appendChild($darkLightSlider);
 
     const osDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: Dark)').matches;
     let getColorMode = localStorage.getItem('color-mode');

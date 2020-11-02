@@ -19,7 +19,7 @@
 
 html {
   box-sizing: border-box;
-  background: var(--element);
+  background-color: var(--element);
   color: var(--surface);
 }
 
@@ -34,9 +34,48 @@ body * {
 }
 
 #App {
+  position: relative;
+  padding-top: 1.5rem;
   margin: 1.5em auto;
   max-width: 1200px;
   column-gap: 1.5em;
+}
+
+input[type='checkbox'] {
+  -webkit-appearance: none;
+}
+
+.darkLightSpan {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 30px;
+  height: 15px;
+  background-color: var(--primary);
+  cursor: pointer;
+  border-radius: 20px;
+  transition: ease-in 0.2s;
+}
+
+.darkLightSpan::after {
+  content: '';
+  position: absolute;
+  width: 13px;
+  height: 13px;
+  top: 1px;
+  left: 2px;
+  background-color: var(--element);
+  border-radius: 50%;
+  transition: ease-in 0.2s;
+}
+
+input[type='checkbox']:checked ~ .darkLightSpan {
+  background-color: var(--primary);
+}
+
+input[type='checkbox']:checked ~ .darkLightSpan::after {
+  background-color: var(--element);
+  transform: translateX(14px);
 }
 
 .SearchResult {
@@ -117,7 +156,7 @@ body * {
   }
   .ImageInfo .content-wrapper {
     background-color: var(--element, #000);
-    border: var(--primary, #8fceff);
+    border: 1px solid var(--primary, #8fceff);
     color: var(--surface, #fff);
   }
 }

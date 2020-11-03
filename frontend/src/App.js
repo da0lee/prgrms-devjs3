@@ -14,7 +14,12 @@ class App {
     this.searchInput = new SearchInput({
       $target,
       onSearch: (keyword) => {
-        api.fetchCats(keyword).then(({ data }) => this.setState(data));
+        this.loading.showLoading();
+
+        api.fetchCats(keyword).then(({ data }) => {
+          this.setState(data);
+          this.loading.hideLoading();
+        });
       },
     });
 

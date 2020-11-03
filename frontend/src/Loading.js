@@ -1,6 +1,6 @@
 class Loading {
   $loading = null;
-  show = true;
+  show = false;
 
   constructor({ $target }) {
     const $loading = document.createElement('div');
@@ -12,15 +12,26 @@ class Loading {
     this.render();
   }
 
+  showLoading() {
+    this.setState({ show: true });
+  }
+
+  hideLoading() {
+    this.setState({ show: false });
+  }
+
+  setState(nextShow) {
+    this.show = nextShow;
+    this.render();
+  }
+
   render() {
     if (this.show) {
       this.$loading.innerHTML = `
       <p>😺 고양이 소환 중 😺</p>
       `;
     } else {
-      this.$loading.innerHTML = `
-      <p></p>
-      `;
+      this.$loading.innerHTML = '';
     }
   }
 }

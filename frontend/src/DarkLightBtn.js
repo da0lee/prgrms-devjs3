@@ -1,6 +1,9 @@
 class DarkLightBtn {
+  $darkLightBtn = null;
+  osDarkMode = null;
+  getColorMode = null;
+
   constructor({ $target }) {
-    // const $
     const $darkLightLable = document.createElement('label');
     const $darkLightBtn = document.createElement('input');
     const $darkLightSlider = document.createElement('span');
@@ -16,10 +19,10 @@ class DarkLightBtn {
     $darkLightLable.appendChild($darkLightBtn);
     $darkLightLable.appendChild($darkLightSlider);
 
-    const osDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: Dark)').matches;
-    let getColorMode = localStorage.getItem('color-mode');
+    this.osDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: Dark)').matches;
+    this.getColorMode = localStorage.getItem('color-mode');
 
-    if (osDarkMode) {
+    if (this.osDarkMode) {
       document.documentElement.setAttribute('color-mode', 'dark');
       localStorage.setItem('color-mode', 'dark');
     } else {
@@ -28,9 +31,9 @@ class DarkLightBtn {
     }
 
     $darkLightBtn.addEventListener('click', () => {
-      getColorMode = getColorMode === 'light' ? 'dark' : 'light';
-      document.documentElement.setAttribute('color-mode', getColorMode);
-      localStorage.setItem('color-mode', getColorMode);
+      this.getColorMode = this.getColorMode === 'light' ? 'dark' : 'light';
+      document.documentElement.setAttribute('color-mode', this.getColorMode);
+      localStorage.setItem('color-mode', this.getColorMode);
     });
   }
 

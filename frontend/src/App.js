@@ -7,6 +7,10 @@ class App {
   constructor($target) {
     this.$target = $target;
 
+    this.darkLightBtn = new DarkLightBtn({
+      $target,
+    });
+
     this.searchInput = new SearchInput({
       $target,
       onSearch: (keyword) => {
@@ -31,10 +35,6 @@ class App {
         visible: false,
         image: null,
       },
-    });
-
-    this.darkLightBtn = new DarkLightBtn({
-      $target,
     });
   }
 

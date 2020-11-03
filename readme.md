@@ -1,16 +1,102 @@
-# fe생존키트: 온라인 스터디 3기
-## yunki and Programmers
+# 1주차 README
 
-프로그래머스와 문쌤이 운영하는 'fe생존키트: 온라인 스터디' 3기를 위한 프라이빗 저장소에요.
-아래에 간단히 스터디 관련한 주요 내용을 요약해둘게요.
+> index.html
 
-- 스터디 시작: 2020-10-29(목)
-- 스터디 종료: 2020-11-26(목) 총 4주
-- 과정 관련 문의사항: 썬에게 슬랙 DM, 또는 02-539-1885, learn@programmers.co.kr
-- 환불 등 결제 관련 문의사항: contact@programmers.co.kr
+### src/main.js 가 가장 아래 있는 이유
+앞선 utility들을 실행하고 마지막에 main.js 실행하라는 의미
 
-미션 요구사항, 세션 녹화본, 세션에서 쓴 슬라이드 등을 공유하는 학습 공간은 [여기를 클릭](https://school.programmers.co.kr/courses/10348) 하세요.
+<br/>
 
-----
+> api.js
 
-이 저장소와 학습 공간(school.programmers.co.kr)은 스터디 기간이 지나도 닫지 않습니다. 추후에 언젠가, 이 스터디에서 진행했던 내용을 참고하고 싶을 때 활용하시면 된답니다. 하지만 이보다 더 중요한건 **과정이 진행되는동안 본인이 할 수 있는 만큼 최고로 집중하는 것** 이니, 히스토리가 남고 안남고와는 상관 없이 열심히 참여해주세요.
+### 바뀌지 않는 상수값은 대문자로 표현
+
+```js
+const API_ENDPOINT ="http://localhost:4001";
+```
+
+<br/>
+
+> darkModeToggle.js
+
+### DarkMode Toggle 
+
+```js
+class DarkModeToggle {
+  // state
+
+  isDarkMode = null;
+
+  // element 생성, event 등록,
+
+  constructor({ $target }) {
+    const $DarkModeToggle = document.createElement('input');
+    this.$DarkModeToggle = $DarkModeToggle;
+    this.$DarkModeToggle.type = 'checkbox';
+
+    $DarkModeToggle.className = 'DarkModeToggle';
+    $target.appendChild($DarkModeToggle);
+
+    $DarkModeToggle.addEventListener('change', (e) => {
+      this.setColorMode(e.target.checked);
+    });
+    this.initColorMode();
+  }
+
+  // 활용할 함수들 정의
+  // constructor 안에 있어도 동작하지만, 더 깔끔하게 코드륵 작성하기 위해 바깥 쪽에 함수로 분리
+  // this.isDarkMode의 경우 지금처럼 직접 할당하는 것보다 setState() 를 사용하는 것이 좋다.
+
+  initColorMode() {
+    // 초기화
+    // isDarkMode state, checked 상태, html attribute
+    this.isDarkMode = window.matchMedia('(prefers-color-scheme:dark)').matchs;
+    // os의 darkmode 여부에 따라 우리가 만든 toggle btn의 클릭상태 결정
+    this.$DarkModeToggle.checked = this.isDarkMode;
+    this.setColorMode(this.isDarkMode);
+  }
+
+  // os의 darkmode 여부에 따라 body의 color-mode 설정
+  setColorMode(isDarkMode) {
+    document.documentElement.setAttribute('color-mode', isDarkMode ? 'dark' : 'light');
+  }
+
+  render() {}
+}
+```
+
+<br/>
+
+### CSS의 선택자 / 변수
+
+> style.css
+
+```css
+/* ':' : 선택자 */
+/* '--' : css 변수 정의 */
+:root[color-mode='light'] {
+  --background: #fff;
+  --color: #000;
+  --primary: #01408e;
+}
+
+:root[color-mode='dark'] {
+  --background: #000;
+  --color: #fff;
+  --primary: #8fceff;
+}
+
+/*  정의한 변수들의 실제 사용 */
+ body * {
+  font-family: Goyang;
+  background-color: var(--background);
+  color: var(--color);
+}
+```
+
+<br/>
+
+### Sementic markup
+
+html은 본래 웹상의 문서를 나타내기 위함. 현재는 문서의 개념보다는 동적인 App의 느낌이 더 강하지만, 아무 의미없는 div로 모든 태그를 작성하는 것보다 section, article 등 의미를 부여해 작성하는 것이 나, 그리고 함께 일하는 개발자들이 읽었을 때도 의미파악을 하는 것에 도움을 준다.
+

@@ -4,9 +4,11 @@ class SearchResult {
   onClick = null;
 
   constructor({ $target, initialData, onClick }) {
+    const $wrapper = document.createElement('section');
     this.$searchResult = document.createElement('ul');
     this.$searchResult.className = 'SearchResult';
-    $target.appendChild(this.$searchResult);
+    $target.appendChild($wrapper);
+    $wrapper.appendChild(this.$searchResult);
 
     this.data = initialData;
     this.onClick = onClick;

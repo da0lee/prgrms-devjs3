@@ -1,5 +1,6 @@
 class DarkLightBtn {
   constructor({ $target }) {
+    // const $
     const $darkLightLable = document.createElement('label');
     const $darkLightBtn = document.createElement('input');
     const $darkLightSlider = document.createElement('span');

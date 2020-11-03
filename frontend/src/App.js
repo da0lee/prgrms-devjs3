@@ -29,6 +29,10 @@ class App {
       },
     });
 
+    this.loading = new Loading({
+      $target,
+    });
+
     this.imageInfo = new ImageInfo({
       $target,
       data: {

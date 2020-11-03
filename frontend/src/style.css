@@ -1,3 +1,16 @@
+/* reset */
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+p,
+ul {
+  margin: 0;
+  padding: 0;
+}
+
 :root[color-mode='light'] {
   --background: #fff;
   --color: #000;
@@ -27,17 +40,7 @@ body * {
   color: var(--color);
 }
 
-*,
-*:before,
-*:after {
-  box-sizing: inherit;
-}
-
-ul {
-  margin: 0;
-  padding: 0;
-}
-
+/* App */
 #App {
   position: relative;
   padding-top: 0.3rem;
@@ -46,6 +49,7 @@ ul {
   column-gap: 1.5em;
 }
 
+/* Dark mode */
 input[type='checkbox'] {
   -webkit-appearance: none;
 }
@@ -83,6 +87,28 @@ input[type='checkbox']:checked ~ .darkLightSlider::after {
   transform: translateX(14px);
 }
 
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: var(--background, #000);
+    color: var(--color, #fff);
+  }
+  .ImageInfo .content-wrapper {
+    background-color: var(--background, #000);
+    border: 1px solid var(--primary, #8fceff);
+    color: var(--color, #fff);
+  }
+}
+
+/* SearchInput */
+.SearchInput {
+  width: 100%;
+  font-size: 40px;
+  padding: 10px 15px;
+  background-color: var(--background);
+  color: var(--color);
+}
+
+/* SearchResult */
 .SearchResult {
   margin-top: 10px;
   display: grid;
@@ -102,14 +128,21 @@ input[type='checkbox']:checked ~ .darkLightSlider::after {
   width: 100%;
 }
 
-.SearchInput {
+/* Loading  */
+.Loading {
+  z-index: 10;
+  position: absolute;
   width: 100%;
-  font-size: 40px;
-  padding: 10px 15px;
-  background-color: var(--background);
-  color: var(--color);
+  height: 60vh;
 }
 
+.Loading p {
+  margin-top: 9em;
+  text-align: center;
+  font-size: 1.5em;
+}
+
+/* ImageInfo */
 .ImageInfo {
   z-index: 1;
   position: fixed;
@@ -155,18 +188,7 @@ input[type='checkbox']:checked ~ .darkLightSlider::after {
   width: 100%;
 }
 
-@media (prefers-color-scheme: dark) {
-  body {
-    background-color: var(--background, #000);
-    color: var(--color, #fff);
-  }
-  .ImageInfo .content-wrapper {
-    background-color: var(--background, #000);
-    border: 1px solid var(--primary, #8fceff);
-    color: var(--color, #fff);
-  }
-}
-
+/* media query */
 /* 992px 이하 */
 @media screen and (max-width: 992px) {
   .SearchResult {

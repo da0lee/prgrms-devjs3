@@ -25,8 +25,7 @@ class ImageInfo {
       this.$imageInfo.innerHTML = `
         <div class="content-wrapper">
           <head class="title">
-            <h2
-            r>${name}</h2>
+            <h2>${name}</h2>
             <button type="button" class="close">x</button>
           </head>
           <img src="${url}" alt="${name}"/>        

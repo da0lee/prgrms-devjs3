@@ -1,5 +1,3 @@
-  this.loading.hide();
-
 > index.html
 
 ### src/main.js 가 가장 아래 있는 이유
@@ -19,7 +17,7 @@ const API_ENDPOINT ="http://localhost:4001";
 
 > darkModeToggle.js
 
-### DarkMode Toggle 
+### DarkMode Toggle 풀이
 
 ```js
 class DarkModeToggle {
@@ -27,7 +25,7 @@ class DarkModeToggle {
 
   isDarkMode = null;
 
-  // element 생성, event 등록,
+  // element 생성, event 등록
 
   constructor({ $target }) {
     const $DarkModeToggle = document.createElement('input');
@@ -44,7 +42,7 @@ class DarkModeToggle {
   }
 
   // 활용할 함수들 정의
-  // constructor 안에 있어도 동작하지만, 더 깔끔하게 코드륵 작성하기 위해 바깥 쪽에 함수로 분리
+  // constructor 안에 있어도 동작하지만, 1. 역할의 분리와 재사용 2. 가독성(깔끔한 코드)를 위해 바깥쪽에 method 분리
   // this.isDarkMode의 경우 지금처럼 직접 할당하는 것보다 setState() 를 사용하는 것이 좋다.
 
   initColorMode() {
@@ -66,6 +64,55 @@ class DarkModeToggle {
 ```
 
 <br/>
+
+### DarkMode Toggle 나의 풀이 1-1
+
+```js
+class DarkLightBtn {
+  $darkLightBtn = null;
+  osDarkMode = null;
+  getColorMode = null;
+
+  constructor({ $target }) {
+    const $darkLightLable = document.createElement('label');
+    const $darkLightBtn = document.createElement('input');
+    const $darkLightSlider = document.createElement('span');
+    this.$darkLightLable = $darkLightLable;
+    this.$darkLightBtn = $darkLightBtn;
+    this.$darkLightSpan = $darkLightSlider;
+
+    $darkLightBtn.type = 'checkbox';
+    $darkLightBtn.className = 'darkLightBtn';
+    $darkLightSlider.className = 'darkLightSlider';
+
+    $target.appendChild($darkLightLable);
+    $darkLightLable.appendChild($darkLightBtn);
+    $darkLightLable.appendChild($darkLightSlider);
+
+    // os의 다크모드 설정여부. 값이 boolean으로 반환된다.
+    this.osDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: Dark)').matches;
+    // localStorage에서 가져온 color-mode / light, dark
+    this.getColorMode = localStorage.getItem('color-mode');
+
+    // 지금 내가 짠 로직은 os의 darkmode가 사용자의 toggle 설정여부 보다 우위로 적용되고 있다.
+    //  os의 Darkmode 값을 여부로 localStorage에 color-mode 값을 저장할 것이 아니라 사용자의 toggle 클릭 여부를 기점으로 저장해야 한다. 
+    // 최초 진입시 color-mode를 설정하기 위한 로직
+    if (this.osDarkMode) {
+      document.documentElement.setAttribute('color-mode', 'dark');
+      localStorage.setItem('color-mode', 'dark');
+    } else {
+      document.documentElement.setAttribute('color-mode', 'light');
+      localStorage.setItem('color-mode', 'light');
+    }
+
+    $darkLightBtn.addEventListener('change', (e) => {
+      this.getColorMode = this.getColorMode === 'light' ? 'dark' : 'light';
+      document.documentElement.setAttribute('color-mode', this.getColorMode);
+      localStorage.setItem('color-mode', this.getColorMode);
+    });
+  }
+}
+```
 
 ### CSS의 선택자 / 변수
 
@@ -98,7 +145,9 @@ class DarkModeToggle {
 
 ### Sementic markup
 
-html은 본래 웹상의 문서를 나타내기 위함. 현재는 문서의 개념보다는 동적인 App의 느낌이 더 강하지만, 아무 의미없는 div로 모든 태그를 작성하는 것보다 section, article 등 의미를 부여해 작성하는 것이 나, 그리고 함께 일하는 개발자들이 읽었을 때도 의미파악을 하는 것에 도움을 준다.
+html은 본래 웹상의 문서를 나타내기 위함. 현재는 문서의 개념보다는 동적인 App의 느낌이 더 강하지만, 아무 의미없는 div로 모든 태그를 작성하는 것보다 section, article 등 의미를 부여해 작성하는 것이 나, 그리고 함께 일하는 개발자들이 읽었을 때도 의미 파악에 도움을 준다.
+
+<br/>
 
 # 2주차 README
 

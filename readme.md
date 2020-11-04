@@ -93,7 +93,7 @@ class DarkLightBtn {
     this.getColorMode = localStorage.getItem('color-mode');
 
     // 지금 내가 짠 로직은 os의 darkmode가 사용자의 toggle 설정여부 보다 우위로 적용되고 있다.
-    //  os의 Darkmode 값을 여부로 localStorage에 color-mode 값을 저장할 것이 아니라 사용자의 toggle 클릭 여부를 기점으로 저장해야 한다. 
+    // os의 Darkmode 값을 여부로 localStorage에 color-mode 값을 저장할 것이 아니라 사용자의 toggle 클릭 여부를 기점으로 저장해야 한다. 
     // 최초 진입시 color-mode를 설정하기 위한 로직
     if (this.osDarkMode) {
     // os의 다크모드 설정여부. 값이 boolean으로 반환된다.
@@ -153,15 +153,15 @@ class DarkLightBtn {
   }
 
   initColorMode() {
-    // Q osDarkMode 는 해당 함수 안에서만 쓰이기 때문에 여기서 값을 재할당했는데, 모든 변수값은 constructor에서 설정해주니까 통일해주는게 좋을까?
-    this.osDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: Dark)').matches;
+    // boolean으로 반환된 것을 'dark' : 'light';로 변형해 getColorMode와 맞춰주었다.
+    this.osDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: Dark)').matches ? 'dark' : 'light';
+    console.log(this.osDarkMode);
 
     if (this.getColorMode) {
       document.documentElement.setAttribute('color-mode', this.getColorMode);
-    } else if (this.osDarkMode) {
-      document.documentElement.setAttribute('color-mode', 'dark');
     } else {
-      document.documentElement.setAttribute('color-mode', 'light');
+      // 위에서 osDarkMode와 getColorMode의 type을 맞춰주었으므로 분기처리가 줄어들었다.
+      document.documentElement.setAttribute('color-mode', this.osDarkMode);
     }
   }
 
@@ -171,7 +171,6 @@ class DarkLightBtn {
     localStorage.setItem('color-mode', this.getColorMode);
   }
 }
-
 ```
 
 ### CSS의 선택자 / 변수

@@ -22,7 +22,7 @@ class SearchResult {
   }
 
   render() {
-    if (this.data.length > 0) {
+    if (this.data.length) {
       this.$searchResult.innerHTML = this.data
         .map(
           (cat) => `
@@ -32,8 +32,8 @@ class SearchResult {
         `
         )
         .join('');
-    } else {
-      // this.$searchResult.innerHTML = `<p class="noItem">🐈<br/>요청하신 고양이를<br/>찾을 수 없습니다.</p>`;
+    } else if (this.data === null) {
+      this.$searchResult.innerHTML = `<p class="noItem">🐈<br/>요청하신 고양이를<br/>찾을 수 없습니다.</p>`;
     }
 
     this.$searchResult.querySelectorAll('.item').forEach(($item, index) => {

@@ -32,13 +32,8 @@ class DarkLightBtn {
 
   initColorMode() {
     this.osDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: Dark)').matches ? 'dark' : 'light';
-    console.log(this.osDarkMode);
 
-    if (this.getColorMode) {
-      document.documentElement.setAttribute('color-mode', this.getColorMode);
-    } else {
-      document.documentElement.setAttribute('color-mode', this.osDarkMode);
-    }
+    document.documentElement.setAttribute('color-mode', this.getColorMode ? this.getColorMode : this.osDarkMode);
   }
 
   setColorMode() {

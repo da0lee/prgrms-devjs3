@@ -17,8 +17,8 @@ class App {
         this.loading.showLoading();
 
         api.fetchCats(keyword).then(({ data }) => {
-          this.setState(data);
           this.loading.hideLoading();
+          this.setState(data);
         });
       },
     });

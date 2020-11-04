@@ -33,7 +33,7 @@ class SearchResult {
         )
         .join('');
     } else {
-      this.$searchResult.innerHTML = `<p class="noItem">🐈<br/>요청하신 고양이를<br/>찾을 수 없습니다.</p>`;
+      // this.$searchResult.innerHTML = `<p class="noItem">🐈<br/>요청하신 고양이를<br/>찾을 수 없습니다.</p>`;
     }
 
     this.$searchResult.querySelectorAll('.item').forEach(($item, index) => {

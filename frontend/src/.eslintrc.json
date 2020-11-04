@@ -11,10 +11,5 @@
   "plugins": ["import"],
   "rules": {
     "no-console": "warn"
-  },
-  "settings": {
-    "react": {
-      "version": "detect"
-    }
   }
 }

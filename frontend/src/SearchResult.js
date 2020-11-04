@@ -22,18 +22,21 @@ class SearchResult {
   }
 
   render() {
-    if (this.data.length) {
+    if (this.data === null) {
+      this.$searchResult.innerHTML = `
+      <div class="noItem">
+        <p>🐈<br/>요청하신 고양이를<br/>찾을 수 없습니다.</p>
+      </div>`;
+    } else {
       this.$searchResult.innerHTML = this.data
         .map(
           (cat) => `
-          <li class="item">
-            <img src=${cat.url} alt=${cat.name} />
-          </li>
-        `
+        <li class="item">
+          <img src=${cat.url} alt=${cat.name} />
+        </li>
+      `
         )
         .join('');
-    } else if (this.data === null) {
-      this.$searchResult.innerHTML = `<p class="noItem">🐈<br/>요청하신 고양이를<br/>찾을 수 없습니다.</p>`;
     }
 
     this.$searchResult.querySelectorAll('.item').forEach(($item, index) => {

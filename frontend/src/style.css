@@ -128,27 +128,24 @@ input[type='checkbox']:checked ~ .darkLightSlider::after {
   width: 100%;
 }
 
-.SearchResult .noItem {
-  z-index: 11;
-  position: absolute;
-  width: 1200px;
-  margin-top: 6em;
-  text-align: center;
-  font-size: 40px;
-}
-
-/* Loading  */
-.Loading {
+/* Loading, noItem */
+.Loading,
+.noItem {
   z-index: 10;
   position: fixed;
   width: 1200px;
   height: 60vh;
 }
 
-.Loading p {
+.Loading p,
+.noItem p {
   margin-top: 6em;
   text-align: center;
   font-size: 40px;
+}
+
+.noItem {
+  z-index: 11;
 }
 
 /* ImageInfo */

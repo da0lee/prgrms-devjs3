@@ -21,7 +21,6 @@ class Loading {
   }
 
   setState(nextShow) {
-    console.log(nextShow);
     this.show = nextShow;
     this.render();
   }

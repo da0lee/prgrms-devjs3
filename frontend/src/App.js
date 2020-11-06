@@ -7,7 +7,7 @@ class App {
   constructor($target) {
     this.$target = $target;
 
-    this.darkLightBtn = new DarkLightBtn({
+    this.darkLightToggle = new DarkLightToggle({
       $target,
     });
 
@@ -15,13 +15,19 @@ class App {
       $target,
       onSearch: (keyword) => {
         this.loading.showLoading();
-
         api.fetchCats(keyword).then(({ data }) => {
           this.loading.hideLoading();
           this.setState(data);
+          // 로컬에 저장
+          this.saveResult(data);
         });
       },
     });
+
+    // this.recentKeyword = new RecentKeyword({
+    //   $target,
+    //   getRecentKeywords: () => JSON.parse(localStorage.getItem('recent-keyword')),
+    // });
 
     this.searchResult = new SearchResult({
       $target,
@@ -45,11 +51,22 @@ class App {
         image: null,
       },
     });
+    this.init();
   }
 
   setState(nextData) {
     console.log(this);
     this.data = nextData;
     this.searchResult.setState(nextData);
+  }
+
+  saveResult(result) {
+    localStorage.setItem('lastResult', JSON.stringify(result));
+  }
+
+  init() {
+    const lastResult =
+      localStorage.getItem('lastResult') === null ? [] : JSON.parse(localStorage.getItem('lastResult'));
+    this.setState(lastResult);
   }
 }

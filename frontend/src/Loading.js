@@ -27,10 +27,12 @@ class Loading {
 
   render() {
     if (this.show) {
+      this.$loading.style.display = 'block';
       this.$loading.innerHTML = `
       <p>😺 고양이 소환 중 😺</p>
       `;
     } else {
+      this.$loading.style.display = 'none';
       this.$loading.innerHTML = '';
     }
   }

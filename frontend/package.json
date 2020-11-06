@@ -8,7 +8,7 @@
     "test": "jest --config=jest.config.js",
     "format": "prettier --write \"./**/*.{js,html,css}\"",
     "start": "http-server .",
-    "dev" : "nodemon ./bin/www"
+    "start:dev": "nodemon app.js"
   },
   "repository": {
     "type": "git",

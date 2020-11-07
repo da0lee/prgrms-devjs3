@@ -1,7 +1,5 @@
 const TEMPLATE = '<input type="text">';
 class SearchInput {
-  keywords = [];
-
   constructor({ $target, onSearch }) {
     const $wrap = document.createElement('section');
     const $searchInput = document.createElement('input');
@@ -15,11 +13,11 @@ class SearchInput {
     $searchInput.addEventListener('keypress', (e) => {
       if (e.key === 'Enter') {
         onSearch(e.target.value);
-        // 최근 키워드 저장
-        this.KeywordHistory.addKeyword(e.target.value);
+        this.recentKeyword.setRecentKeywords(e.target.value);
       }
     });
-    this.KeywordHistory = new KeywordHistory({
+
+    this.recentKeyword = new RecentKeyword({
       $target,
       onSearch,
     });

@@ -3,6 +3,7 @@ console.log('app is running!');
 class App {
   $target = null;
   data = [];
+  lastResult = null;
 
   constructor($target) {
     this.$target = $target;
@@ -18,16 +19,10 @@ class App {
         api.fetchCats(keyword).then(({ data }) => {
           this.loading.hideLoading();
           this.setState(data);
-          // 로컬에 저장
-          this.saveResult(data);
+          this.setLastResult(data);
         });
       },
     });
-
-    // this.recentKeyword = new RecentKeyword({
-    //   $target,
-    //   getRecentKeywords: () => JSON.parse(localStorage.getItem('recent-keyword')),
-    // });
 
     this.searchResult = new SearchResult({
       $target,
@@ -60,13 +55,12 @@ class App {
     this.searchResult.setState(nextData);
   }
 
-  saveResult(result) {
+  setLastResult(result) {
     localStorage.setItem('lastResult', JSON.stringify(result));
   }
 
   init() {
-    const lastResult =
-      localStorage.getItem('lastResult') === null ? [] : JSON.parse(localStorage.getItem('lastResult'));
-    this.setState(lastResult);
+    this.lastResult = localStorage.getItem('lastResult') ? JSON.parse(localStorage.getItem('lastResult')) : [];
+    this.setState(this.lastResult);
   }
 }

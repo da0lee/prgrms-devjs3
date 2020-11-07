@@ -431,6 +431,13 @@ class App {
   }
 
   ...
+  // App 실행시 init()을 하는데, init() 시 this.setState에 마지막 검색결과인 this.lastResult를 전달해주면 그걸 다시 검색결과를 보여주는 component인 searchResult의 setState에 전달해주므로 App 처음 실행 시 마지막 검색결과를 볼 수 있다.
+  setState(nextData) {
+  console.log(this);
+  this.data = nextData;
+  this.searchResult.setState(nextData);
+  }
+
   // server에서 result가 object 형태로 들어오고, localstorage에는 string 형태로만 저장이 되므로 JSON.stringify 
   saveResult(result) {
     localStorage.setItem('lastResult', JSON.stringify(result));

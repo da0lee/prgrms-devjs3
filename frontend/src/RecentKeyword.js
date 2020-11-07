@@ -1,29 +1,44 @@
 class RecentKeyword {
   $wrap = null;
   $recentKeywordUl = null;
-  $recentKeywordLi = null;
-  getRecentKeywords = null;
   recentKeywords = [];
 
-  constructor({ $target, getRecentKeywords }) {
+  constructor({ $target, onSearch }) {
     const $wrap = document.createElement('section');
     const $recentKeywordText = document.createElement('span');
     const $recentKeywordUl = document.createElement('ul');
-    const $recentKeywordLi = document.createElement('li');
     this.$recentKeywordText = $recentKeywordText;
     this.$recentKeywordUl = $recentKeywordUl;
-    this.$recentKeywordLi = $recentKeywordLi;
+    this.onSearch = onSearch;
 
-    $recentKeywordText.className = 'recentKeywordText';
+    $recentKeywordText.className = 'RecentKeywordText';
     $recentKeywordUl.className = 'RecentKeywordUl';
     $target.appendChild($wrap);
     $wrap.appendChild($recentKeywordText);
     $wrap.appendChild($recentKeywordUl);
-    $recentKeywordUl.appendChild($recentKeywordLi);
 
-    this.getRecentKeywords = getRecentKeywords;
-    this.recentKeywords = getRecentKeywords();
+    this.init();
+    this.render();
+  }
 
+  init() {
+    const recentKeywords = this.getRecentKeywords();
+    this.setState(recentKeywords);
+  }
+
+  setRecentKeywords(keyword) {
+    this.init();
+    this.recentKeywords.unshift(keyword);
+    this.recentKeywords = this.recentKeywords.slice(0, 5);
+    localStorage.setItem('recentKeywords', this.recentKeywords);
+  }
+
+  getRecentKeywords() {
+    return localStorage.getItem('recentKeywords') ? localStorage.getItem('recentKeywords').split(',') : [];
+  }
+
+  setState(nextData) {
+    this.recentKeywords = nextData;
     this.render();
   }
 
@@ -32,8 +47,14 @@ class RecentKeyword {
     <span>최근 검색어 : </span>
     `;
 
-    if (this.recentKeywords) {
-      this.$recentKeywordLi.innerHTML = this.recentKeywords.map((keyword) => `<li>${keyword}</li>`);
-    }
+    this.$recentKeywordUl.innerHTML = this.recentKeywords
+      .map((keyword) => `<li><a href="#">${keyword}</a></li>`)
+      .join('');
+
+    this.$recentKeywordUl.addEventListener('click', (e) => {
+      if (e.target && e.target.nodeName === 'A') {
+        this.onSearch(e.target.innerHTML);
+      }
+    });
   }
 }

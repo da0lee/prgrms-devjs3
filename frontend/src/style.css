@@ -194,7 +194,18 @@ input[type='checkbox']:checked ~ .DarkLightSlider::after {
   width: 100%;
 }
 
-/* media query */
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: var(--background, #000);
+    color: var(--color, #fff);
+  }
+  .ImageInfo .content-wrapper {
+    background-color: var(--background, #000);
+    border: 1px solid var(--primary, #8fceff);
+    color: var(--color, #fff);
+  }
+}
+
 /* 992px 이하 */
 @media screen and (max-width: 992px) {
   .SearchResult {

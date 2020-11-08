@@ -16,6 +16,7 @@ class App {
       $target,
       onSearch: (keyword) => {
         this.loading.showLoading();
+        this.searchResult.setKeyword(keyword);
         api.fetchCats(keyword).then(({ data }) => {
           this.loading.hideLoading();
           this.setState(data);
@@ -26,6 +27,7 @@ class App {
 
     this.searchResult = new SearchResult({
       $target,
+      lastResult: this.lastResult,
       initialData: this.data,
       onClick: (image) => {
         this.imageInfo.setState({
@@ -46,6 +48,7 @@ class App {
         image: null,
       },
     });
+
     this.init();
   }
 

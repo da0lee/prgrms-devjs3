@@ -420,7 +420,7 @@ class App {
         api.fetchCats(keyword).then(({ data }) => {
           this.loading.hideLoading();
           this.setState(data);
-          // 검색 이벤트 이후 localStorage에 [key: 'lastResult', value: 방금 검색어의 검색결과] 저장
+          // 검색 이벤트 이후 localStorage에 [key: 'lastResult', value: 방금 검색어의 검색결과 저장
           this.saveResult(data);
         });
       },

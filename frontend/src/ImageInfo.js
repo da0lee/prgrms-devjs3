@@ -18,6 +18,21 @@ class ImageInfo {
     this.render();
   }
 
+  closeImageInfo() {
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        this.$imageInfo.style.display = 'none';
+      }
+    });
+    document.addEventListener('click', (e) => {
+      if (e.target.nodeName === 'IMG') {
+        return;
+      }
+      this.$imageInfo.style.display = 'none';
+    });
+    this.$imageInfo.querySelector('button').addEventListener('click', () => (this.$imageInfo.style.display = 'none'));
+  }
+
   render() {
     if (this.data.visible) {
       const { name, url, temperament, origin } = this.data.image;
@@ -28,13 +43,16 @@ class ImageInfo {
             <h2>${name}</h2>
             <button type="button" class="close">x</button>
           </head>
-          <img src="${url}" alt="${name}"/>        
+          <div class="img-container">       
+            <img src="${url}" alt="${name}"/>
+          </div>
           <div class="description">
             <p>성격: ${temperament}</p>
             <p>태생: ${origin}</p>
           </div>
         </div>`;
       this.$imageInfo.style.display = 'block';
+      this.closeImageInfo();
     } else {
       this.$imageInfo.style.display = 'none';
     }

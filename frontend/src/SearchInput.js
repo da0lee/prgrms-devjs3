@@ -3,7 +3,7 @@ class SearchInput {
   $wrap = null;
   $searchInput = null;
 
-  constructor({ $target, onSearch }) {
+  constructor({ $target, onSearch, onRandomSearch }) {
     const $wrap = document.createElement('section');
     const $searchInput = document.createElement('input');
     this.$searchInput = $searchInput;
@@ -22,6 +22,11 @@ class SearchInput {
     });
 
     $searchInput.addEventListener('click', (e) => (e.target.value = ''));
+
+    this.randomSearchBtn = new RandomSearchBtn({
+      $target: $wrap,
+      onRandomSearch,
+    });
 
     this.recentKeyword = new RecentKeyword({
       $target,

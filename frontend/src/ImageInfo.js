@@ -9,7 +9,6 @@ class ImageInfo {
     $target.appendChild($imageInfo);
 
     this.data = data;
-
     this.render();
   }
 
@@ -18,24 +17,36 @@ class ImageInfo {
     this.render();
   }
 
+  catDetails(datas) {
+    api.fetchCatDetail(datas.catData.id).then(({ data }) => {
+      this.setState({
+        visible: true,
+        catData: data,
+      });
+    });
+  }
+
+  imageInfoDisplayNone() {
+    this.$imageInfo.style.display = 'none';
+  }
+
   closeImageInfo() {
+    this.$imageInfo.addEventListener('click', (e) => {
+      if (e.target.className === 'close' || e.target.className === 'ImageInfo') {
+        this.imageInfoDisplayNone();
+      }
+    });
+
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') {
-        this.$imageInfo.style.display = 'none';
+        this.imageInfoDisplayNone();
       }
     });
-    document.addEventListener('click', (e) => {
-      if (e.target.nodeName === 'IMG') {
-        return;
-      }
-      this.$imageInfo.style.display = 'none';
-    });
-    this.$imageInfo.querySelector('button').addEventListener('click', () => (this.$imageInfo.style.display = 'none'));
   }
 
   render() {
     if (this.data.visible) {
-      const { name, url, temperament, origin } = this.data.image;
+      const { name, url, temperament, origin } = this.data.catData;
 
       this.$imageInfo.innerHTML = `
         <div class="content-wrapper">

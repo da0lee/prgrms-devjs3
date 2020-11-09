@@ -36,10 +36,10 @@ class App {
       $target,
       lastResult: this.lastResult,
       initialData: this.data,
-      onClick: (image) => {
-        this.imageInfo.setState({
+      onClick: (cat) => {
+        this.imageInfo.catDetails({
           visible: true,
-          image,
+          catData: cat,
         });
       },
     });
@@ -52,7 +52,7 @@ class App {
       $target,
       data: {
         visible: false,
-        image: null,
+        catData: null,
       },
     });
 

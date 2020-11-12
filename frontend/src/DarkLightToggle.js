@@ -3,7 +3,7 @@ class DarkLightToggle {
   $darkLightToggle = null;
   $darkLightSlider = null;
   osDarkMode = null;
-  getColorMode = null;
+  userColorMode = null;
 
   constructor({ $target }) {
     const $darkLightLable = document.createElement('label');
@@ -30,13 +30,13 @@ class DarkLightToggle {
 
   initColorMode() {
     this.osDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: Dark)').matches ? 'dark' : 'light';
-    this.getColorMode = localStorage.getItem('color-mode');
-    document.documentElement.setAttribute('color-mode', this.getColorMode ? this.getColorMode : this.osDarkMode);
+    this.userColorMode = localStorage.getItem('color-mode');
+    document.documentElement.setAttribute('color-mode', this.userColorMode ? this.userColorMode : this.osDarkMode);
   }
 
   setColorMode() {
-    this.getColorMode = this.getColorMode === 'light' ? 'dark' : 'light';
-    document.documentElement.setAttribute('color-mode', this.getColorMode);
-    localStorage.setItem('color-mode', this.getColorMode);
+    this.userColorMode = this.userColorMode === 'light' ? 'dark' : 'light';
+    document.documentElement.setAttribute('color-mode', this.userColorMode);
+    localStorage.setItem('color-mode', this.userColorMode);
   }
 }

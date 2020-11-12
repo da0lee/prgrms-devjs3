@@ -40,25 +40,21 @@ class SearchResult {
     this.render();
   }
 
-  observer = new IntersectionObserver(
-    (items, observer) => {
-      const recentKeyword = localStorage.getItem('recentKeywords')
-        ? localStorage.getItem('recentKeywords').split(',')[0]
-        : [];
+  observer = new IntersectionObserver((items, observer) => {
+    const recentKeyword = localStorage.getItem('recentKeywords')
+      ? localStorage.getItem('recentKeywords').split(',')[0]
+      : [];
 
-      items.forEach((item) => {
-        if (item.isIntersecting) {
-          item.target.querySelector('img').src = item.target.querySelector('img').dataset.src;
-          let itemIndex = Number(item.target.children[0].dataset.index);
-          if (itemIndex === this.data.length - 1) {
-            this.page += 1;
-            this.onNextPage(recentKeyword, this.page);
-          }
+    items.forEach((item) => {
+      if (item.isIntersecting) {
+        let itemIndex = Number(item.target.dataset.index);
+        if (itemIndex === this.data.length - 1) {
+          this.page += 1;
+          this.onNextPage(recentKeyword, this.page);
         }
-      });
-    },
-    { threshold: 0.3 }
-  );
+      }
+    });
+  });
 
   render() {
     if (this.keyword == null && (this.lastResult == null || this.lastResult.length == 0)) {
@@ -70,7 +66,7 @@ class SearchResult {
         .map(
           (cat, index) => `
         <li class="item">
-          <img src='https://via.placeholder.com/200x300' data-src=${cat.url}  data-index=${index} alt=${cat.name} />
+          <img src=${cat.url}  data-index=${index} alt=${cat.name} />
         </li>
       `
         )
@@ -86,6 +82,6 @@ class SearchResult {
       this.onClick(this.data[e.target.dataset.index]);
     });
 
-    this.$searchResult.querySelectorAll('.item').forEach(($item) => this.observer.observe($item));
+    this.$searchResult.querySelectorAll('.item > img').forEach(($item) => this.observer.observe($item));
   }
 }

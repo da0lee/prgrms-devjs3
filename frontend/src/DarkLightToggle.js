@@ -21,8 +21,6 @@ class DarkLightToggle {
     $darkLightLable.appendChild($darkLightToggle);
     $darkLightLable.appendChild($darkLightSlider);
 
-    this.getColorMode = localStorage.getItem('color-mode');
-
     this.initColorMode();
 
     $darkLightToggle.addEventListener('click', () => {
@@ -32,7 +30,7 @@ class DarkLightToggle {
 
   initColorMode() {
     this.osDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: Dark)').matches ? 'dark' : 'light';
-
+    this.getColorMode = localStorage.getItem('color-mode');
     document.documentElement.setAttribute('color-mode', this.getColorMode ? this.getColorMode : this.osDarkMode);
   }
 

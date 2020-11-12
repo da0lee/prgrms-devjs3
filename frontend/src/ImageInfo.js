@@ -9,6 +9,11 @@ class ImageInfo {
     $target.appendChild($imageInfo);
 
     this.data = data;
+
+    this.loading = new Loading({
+      $target,
+    });
+
     this.render();
   }
 
@@ -18,7 +23,9 @@ class ImageInfo {
   }
 
   catDetails(datas) {
+    this.loading.showLoading();
     api.fetchCatDetail(datas.catData.id).then(({ data }) => {
+      this.loading.hideLoading();
       this.setState({
         visible: true,
         catData: data,
@@ -30,7 +37,7 @@ class ImageInfo {
     this.$imageInfo.style.display = 'none';
   }
 
-  closeImageInfo() {
+  bindEvents() {
     this.$imageInfo.addEventListener('click', (e) => {
       if (e.target.className === 'close' || e.target.className === 'ImageInfo') {
         this.imageInfoDisplayNone();
@@ -63,7 +70,7 @@ class ImageInfo {
           </div>
         </div>`;
       this.$imageInfo.style.display = 'block';
-      this.closeImageInfo();
+      this.bindEvents();
     } else {
       this.$imageInfo.style.display = 'none';
     }

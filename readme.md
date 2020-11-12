@@ -288,10 +288,6 @@ this.searchInput = new SearchInput({
 > KeywordHistory.js
 
 ### 최근 검색어 저장
-1. searchInput keyword localStorage에 setItem : 입력값이 바로바로 App에서 정의?
-2. App.js 에서 RecentKeyword에 1에서 저장한 값을 넘겨준다. (rendering 하자마자 받아와야 하므로 App에 함수 정의)
-3. getItem하여 UI에 구현 
-4. li는 5개 까지만 반복 
 
 <br/>
 
@@ -513,7 +509,7 @@ class ImageInfo {
   }
 
   catDetails(datas) {
-    api.fetchCatDetail(datas.cat.id).then(({ data }) => {
+    api.fetchCatDetail(datas.catData.id).then(({ data }) => {
       this.setState({
         visible: true,
         catData: data,
@@ -569,3 +565,203 @@ class ImageInfo {
 }
 
 ```
+
+<br/>
+
+> api.js
+
+```js
+const API_ENDPOINT = 'http://localhost:4001';
+
+const api = {
+
+  ...
+
+  fetchCatDetail: (id) => {
+    return fetch(`${API_ENDPOINT}/api/cats/${id}`).then((res) => res.json());
+  },
+};
+
+```
+
+### Infinity Scroll / Lazy Loading
+
+각 검색 결과 당 몇 개씩의 data가 들어오는지 몰라 무한 스크롤을 하기에 data 양이 충분할까, 라는 고민이 되었는데, 다른 분 도움으로 backend 코드를 살펴보니 고양이 종 당 1000여개의 이미지들이 들어오고 있어 어떤 검색어로 입력하여도 충분하겠구나 생각이 들었습니다. 처음에는 Dummy keyword를 만들어 ramdom으로 검색어 query에 넣는 방식으로 접근 하였으나, 검색결과 data가 충분하다면 최근 검색 결과로 받아온 data를 쭉 보여주는 것이 자연스럽겠다 싶어 recentKeyword의 [0]으로 query를 설정하였습니다.
+
+https://egg-programmer.tistory.com/275
+
+> SearchResult.js
+```js
+class SearchResult {
+  $wrap = null;
+  $searchResult = null;
+  data = null;
+  keyword = null;
+  lastResult = null;
+  onClick = null;
+  onNextPage = null;
+
+  constructor({ $target, lastResult, initialData, keyword, onClick, onNextPage }) {
+    const $wrap = document.createElement('section');
+    const $searchResult = document.createElement('ul');
+    this.$searchResult = $searchResult;
+
+    this.$searchResult.className = 'SearchResult';
+    $target.appendChild($wrap);
+    $wrap.appendChild($searchResult);
+
+    this.data = initialData;
+    this.keyword = keyword;
+    this.lastResult = lastResult;
+    this.onClick = onClick;
+    this.onNextPage = onNextPage;
+    this.render();
+  }
+
+  setKeyword(nextKeyword) {
+    this.keyword = nextKeyword;
+  }
+
+  setState(nextData) {
+    this.data = nextData;
+    this.lastResult = nextData;
+    this.render();
+  }
+
+  // items : 객체 목록, observer : 관찰자 parameter로 전달
+  listObserver = new IntersectionObserver((items, observer) => {
+    items.forEach((item) => {
+      // isIntersectiong: 타겟 요소가 현재 교차 루트와 교차하는지 여부를 boolean 값으로 알려줌.
+      // 아이템이 화면에 보일 때
+      if (item.isIntersecting) {
+        // Lazy loading : 레이기존에 placeholder로 차지하고 있던 공간에 진짜 img src 대입
+          // 이미지를 로드
+        item.target.querySelector('img').src = item.target.querySelector('img').dataset.src;
+      
+        // 마지막 요소를 찾아내고
+        let dataIndex = Number(item.target.dataset.index);
+        // 마지막 요소라면 onNextPage 호출
+        if (dataIndex=== this.data.length -1) {
+          this.onNextPage();
+        }
+      }
+    });
+  });
+
+  render() {
+    if (this.keyword == null && (this.lastResult == null || this.lastResult.length == 0)) {
+      return;
+    }
+
+    if (this.data?.length > 0) {
+      this.$searchResult.innerHTML = this.data
+        .map(
+          (cat, index) => `
+        <li class="item" data-index=${index}>
+          <img src='https://via.placeholder.com/200x300' data-src=${cat.url} alt=${cat.name} />
+        </li>
+      `
+        )
+        .join('');
+    } else {
+      this.$searchResult.innerHTML = `
+      <div class="noItem">
+        <p>🐈<br/>요청하신 고양이를<br/>찾을 수 없습니다.</p>
+      </div>`;
+    }
+
+    this.$searchResult.querySelectorAll('.item').forEach(($item, index) => {
+      $item.addEventListener('click', () => {
+        this.onClick(this.data[index]);
+      });
+      // Observer 등록
+      // observe method의 인자에 target 요소를 넣어 관찰 시작
+      this.listObserver.observe($item);
+    });
+  }
+}
+
+```
+
+<br/>
+
+> App.js
+```js
+
+class App {
+  $target = null;
+  data = [];
+  lastResult = null;
+  // page 정의
+  page = 1;
+
+  ... 
+
+  this.searchResult = new SearchResult({
+    $target,
+    lastResult: this.lastResult,
+    initialData: this.data,
+    onClick: (cat) => {
+      this.imageInfo.catDetails({
+        visible: true,
+        catData: cat,
+      });
+    },
+    onNextPage: () => {
+      // 전달할 검색어
+      const recentKeywords = localStorage.getItem('recentKeywords')
+        ? localStorage.getItem('recentKeywords').split(',')
+        : [];
+      // 전달할 page 
+      const page = this.page + 1;
+      this.loading.showLoading();
+      api.fetchNextCats(recentKeywords, page).then(({ data }) => {
+        // newData : 넘어온 새로운 data를 기존 data 뒤에 붙혀주었다.
+        let newData = this.data.concat(data);
+        this.loading.hideLoading();
+        // setState에서 검색결과를 뿌려주는 searchResult component에 뿌려줄 data값을 관리하고 있으므로 concat한 data를 setState에 전달해준다.
+        this.setState(newData);
+        // const page = this.page + 1; 까지만 하면 page가 1 +1 = 2에서 변하지 않으므로 더한 값 this.page에 재 할당 
+        this.page = page;
+      });
+    },
+  });
+
+  setState(nextData) {
+    console.log(this);
+    this.data = nextData;
+    this.searchResult.setState(nextData);
+  }
+
+  ...
+
+}
+
+```
+
+<br/>
+
+> api.js
+```js
+const API_ENDPOINT = 'http://localhost:4001';
+
+const api = {
+
+  ... 
+
+  fetchNextCats: (keyword, page) => {
+    return fetch(`${API_ENDPOINT}/api/cats/search?q=${keyword}&page=${page}`).then((res) => res.json());
+  },
+
+  ...
+
+};
+
+```
+
+### 이벤트 위임
+
+https://ko.javascript.info/event-delegation
+
+- 많은 핸들러를 할당하지 않아도 되기 때문에 초기화가 단순해지고 메모리가 절약된다.
+- 요소를 추가하거나 제거할 때 해당 요소에 할당된 핸들러를 추가하거나 제거할 필요가 없기 때문에 코드가 짧아진다.

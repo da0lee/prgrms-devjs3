@@ -25,7 +25,7 @@ class App {
       },
       onRandomSearch: () => {
         this.loading.showLoading();
-        api.fetchRandomCats().then(({ data }) => {
+        api.fetchCats().then(({ data }) => {
           this.loading.hideLoading();
           this.setState(data);
         });
@@ -40,6 +40,12 @@ class App {
         this.imageInfo.catDetails({
           visible: true,
           catData: cat,
+        });
+      },
+      onNextPage: (recentKeyword, page) => {
+        api.fetchCats(recentKeyword, page).then(({ data }) => {
+          let newData = this.data.concat(data);
+          this.setState(newData);
         });
       },
     });

@@ -5,7 +5,7 @@
   "description": "This repository was created by Emily for Roto, Jeffrey and Lucas.",
   "main": "index.js",
   "scripts": {
-    "start": "npm run crawling && node app.js",
+    "start": "node app.js",
     "generate-docs": "apidoc -e '(node_modules|public)' --input ./ --output ./public/apidoc/",
     "fire-stress": "artillery run ./artillery/stressConfig.json",
     "crawling": "node generateData"

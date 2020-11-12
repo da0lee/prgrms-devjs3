@@ -1,12 +1,17 @@
 class SearchResult {
   $wrap = null;
   $searchResult = null;
+
   data = null;
   keyword = null;
   lastResult = null;
-  onClick = null;
+  recentKeyword = null;
+  page = 1;
 
-  constructor({ $target, lastResult, initialData, keyword, onClick }) {
+  onClick = null;
+  onNextPage = null;
+
+  constructor({ $target, lastResult, initialData, keyword, onClick, onNextPage }) {
     const $wrap = document.createElement('section');
     const $searchResult = document.createElement('ul');
     this.$searchResult = $searchResult;
@@ -18,7 +23,10 @@ class SearchResult {
     this.data = initialData;
     this.keyword = keyword;
     this.lastResult = lastResult;
+
     this.onClick = onClick;
+    this.onNextPage = onNextPage;
+
     this.render();
   }
 
@@ -32,6 +40,26 @@ class SearchResult {
     this.render();
   }
 
+  observer = new IntersectionObserver(
+    (items, observer) => {
+      const recentKeyword = localStorage.getItem('recentKeywords')
+        ? localStorage.getItem('recentKeywords').split(',')[0]
+        : [];
+
+      items.forEach((item) => {
+        if (item.isIntersecting) {
+          item.target.querySelector('img').src = item.target.querySelector('img').dataset.src;
+          let itemIndex = Number(item.target.children[0].dataset.index);
+          if (itemIndex === this.data.length - 1) {
+            this.page += 1;
+            this.onNextPage(recentKeyword, this.page);
+          }
+        }
+      });
+    },
+    { threshold: 0.3 }
+  );
+
   render() {
     if (this.keyword == null && (this.lastResult == null || this.lastResult.length == 0)) {
       return;
@@ -40,9 +68,9 @@ class SearchResult {
     if (this.data?.length > 0) {
       this.$searchResult.innerHTML = this.data
         .map(
-          (cat) => `
+          (cat, index) => `
         <li class="item">
-          <img src=${cat.url} alt=${cat.name} />
+          <img src='https://via.placeholder.com/200x300' data-src=${cat.url}  data-index=${index} alt=${cat.name} />
         </li>
       `
         )
@@ -54,10 +82,10 @@ class SearchResult {
       </div>`;
     }
 
-    this.$searchResult.querySelectorAll('.item').forEach(($item, index) => {
-      $item.addEventListener('click', () => {
-        this.onClick(this.data[index]);
-      });
+    this.$searchResult.addEventListener('click', (e) => {
+      this.onClick(this.data[e.target.dataset.index]);
     });
+
+    this.$searchResult.querySelectorAll('.item').forEach(($item) => this.observer.observe($item));
   }
 }

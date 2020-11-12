@@ -11,6 +11,10 @@ ul {
   padding: 0;
 }
 
+li {
+  list-style: none;
+}
+
 :root[color-mode='light'] {
   --background: #fff;
   --color: #000;
@@ -117,6 +121,7 @@ input[type='checkbox']:checked ~ .DarkLightSlider::after {
 
 /* SearchResult */
 .SearchResult {
+  z-index: 10;
   margin-top: 5px;
   display: grid;
   grid-template-columns: repeat(4, minmax(250px, 1fr));
@@ -148,15 +153,17 @@ input[type='checkbox']:checked ~ .DarkLightSlider::after {
 /* Loading, noItem */
 .Loading,
 .noItem {
-  z-index: 10;
   position: fixed;
+  top: 0;
   width: 1200px;
-  height: 60vh;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
 .Loading p,
 .noItem p {
-  margin-top: 6em;
+  margin-top: 7em;
+  background-color: transparent;
   text-align: center;
   font-size: 40px;
 }
@@ -167,7 +174,7 @@ input[type='checkbox']:checked ~ .DarkLightSlider::after {
 
 /* ImageInfo */
 .ImageInfo {
-  z-index: 1;
+  z-index: 100;
   position: fixed;
   left: 0;
   top: 0;

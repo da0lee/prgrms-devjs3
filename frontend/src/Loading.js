@@ -12,16 +12,8 @@ class Loading {
     this.render();
   }
 
-  showLoading() {
-    this.setState({ show: true });
-  }
-
-  hideLoading() {
-    this.setState({ show: false });
-  }
-
-  setState(nextShow) {
-    this.show = nextShow;
+  setState(isShow) {
+    this.show = isShow;
     this.render();
   }
 

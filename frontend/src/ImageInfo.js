@@ -23,9 +23,9 @@ class ImageInfo {
   }
 
   catDetails(datas) {
-    this.loading.showLoading();
+    this.loading.setState(true);
     api.fetchCatDetail(datas.catData.id).then(({ data }) => {
-      this.loading.hideLoading();
+      this.loading.setState(false);
       this.setState({
         visible: true,
         catData: data,

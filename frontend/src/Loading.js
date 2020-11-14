@@ -12,7 +12,7 @@ class Loading {
     this.render();
   }
 
-  setState(isShow) {
+  showLoading(isShow) {
     this.show = isShow;
     this.render();
   }

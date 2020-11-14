@@ -584,9 +584,9 @@ const api = {
 
 ```
 
-### Infinity Scroll / Lazy Loading
+<br/>
 
-각 검색 결과 당 몇 개씩의 data가 들어오는지 몰라 무한 스크롤을 하기에 data 양이 충분할까, 라는 고민이 되었는데, 다른 분 도움으로 backend 코드를 살펴보니 고양이 종 당 1000여개의 이미지들이 들어오고 있어 어떤 검색어로 입력하여도 충분하겠구나 생각이 들었습니다. 처음에는 Dummy keyword를 만들어 ramdom으로 검색어 query에 넣는 방식으로 접근 하였으나, 검색결과 data가 충분하다면 최근 검색 결과로 받아온 data를 쭉 보여주는 것이 자연스럽겠다 싶어 recentKeyword의 [0]으로 query를 설정하였습니다.
+### Infinity Scroll / Lazy Loading
 
 https://egg-programmer.tistory.com/275
 

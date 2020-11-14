@@ -27,7 +27,9 @@ class RecentKeyword {
   }
 
   setRecentKeywords(keyword) {
-    this.recentKeywords.unshift(keyword);
+    if (!this.recentKeywords.includes(keyword)) {
+      this.recentKeywords = [keyword, ...this.recentKeywords];
+    }
     this.recentKeywords = this.recentKeywords.slice(0, 5);
     localStorage.setItem('recentKeywords', this.recentKeywords);
     this.init();

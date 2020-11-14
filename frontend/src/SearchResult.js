@@ -5,8 +5,8 @@ class SearchResult {
   data = null;
   keyword = null;
   lastResult = null;
-  recentKeyword = null;
   page = 1;
+  randomKeyword = false;
 
   onClick = null;
   onNextPage = null;
@@ -25,6 +25,7 @@ class SearchResult {
     this.lastResult = lastResult;
 
     this.onClick = onClick;
+
     this.onNextPage = onNextPage;
 
     this.render();
@@ -34,6 +35,11 @@ class SearchResult {
     this.keyword = nextKeyword;
   }
 
+  isRandomKeyword(isRandom) {
+    console.log('isRandom : ', isRandom);
+    this.randomKeyword = isRandom;
+  }
+
   setState(nextData) {
     this.data = nextData;
     this.lastResult = nextData;
@@ -41,16 +47,14 @@ class SearchResult {
   }
 
   observer = new IntersectionObserver((items, observer) => {
-    const recentKeyword = localStorage.getItem('recentKeywords')
-      ? localStorage.getItem('recentKeywords').split(',')[0]
-      : [];
+    if (this.randomKeyword) return;
 
     items.forEach((item) => {
       if (item.isIntersecting) {
         let itemIndex = Number(item.target.dataset.index);
         if (itemIndex === this.data.length - 1) {
           this.page += 1;
-          this.onNextPage(recentKeyword, this.page);
+          this.onNextPage(this.keyword, this.page);
         }
       }
     });
@@ -65,8 +69,8 @@ class SearchResult {
       this.$searchResult.innerHTML = this.data
         .map(
           (cat, index) => `
-        <li class="item">
-          <img src=${cat.url}  data-index=${index} alt=${cat.name} />
+        <li class="item" data-index=${index}>
+          <img src=${cat.url} alt=${cat.name} data-index=${index} />
         </li>
       `
         )
@@ -79,9 +83,9 @@ class SearchResult {
     }
 
     this.$searchResult.addEventListener('click', (e) => {
-      this.onClick(this.data[e.target.dataset.index]);
+      this.onClick(this.data[e.target.parentNode.dataset.index]);
     });
 
-    this.$searchResult.querySelectorAll('.item > img').forEach(($item) => this.observer.observe($item));
+    this.$searchResult.querySelectorAll('.item').forEach(($item) => this.observer.observe($item));
   }
 }

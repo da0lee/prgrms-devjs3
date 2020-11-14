@@ -145,9 +145,7 @@ input[type='checkbox']:checked ~ .DarkLightSlider::after {
 .SearchResult img {
   width: 100%;
   height: 100%;
-  min-width: 200px;
-  min-height: 300px;
-  background: var(--background2);
+  background-color: var(--background2);
   object-fit: cover;
 }
 
@@ -155,11 +153,12 @@ input[type='checkbox']:checked ~ .DarkLightSlider::after {
   display: inline-block;
   margin: 0 0 1em;
   width: 100%;
+  height: 100%;
+  min-height: 400px;
 }
 
-/* Loading, noItem */
-.Loading,
-.noItem {
+/* Loading */
+.Loading {
   position: fixed;
   top: 0;
   left: 0;
@@ -168,16 +167,24 @@ input[type='checkbox']:checked ~ .DarkLightSlider::after {
   background-color: var(--modalBackground);
 }
 
-.Loading p,
-.noItem p {
+.Loading p {
   margin-top: 7em;
   background-color: transparent;
   text-align: center;
   font-size: 40px;
 }
 
+/* .noItem */
 .noItem {
-  z-index: 11;
+  width: 1200px;
+  background-color: var(--modalBackground);
+}
+
+.noItem p {
+  margin-top: 3em;
+  background-color: transparent;
+  text-align: center;
+  font-size: 40px;
 }
 
 /* ImageInfo */

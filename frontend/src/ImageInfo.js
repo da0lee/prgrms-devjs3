@@ -23,9 +23,9 @@ class ImageInfo {
   }
 
   catDetails(datas) {
-    this.loading.setState(true);
+    this.loading.showLoading(true);
     api.fetchCatDetail(datas.catData.id).then(({ data }) => {
-      this.loading.setState(false);
+      this.loading.showLoading(false);
       this.setState({
         visible: true,
         catData: data,
@@ -39,7 +39,7 @@ class ImageInfo {
 
   bindEvents() {
     this.$imageInfo.addEventListener('click', (e) => {
-      if (e.target.className === 'close' || e.target.className === 'ImageInfo') {
+      if (e.target.className === 'close' || 'ImageInfo') {
         this.imageInfoDisplayNone();
       }
     });

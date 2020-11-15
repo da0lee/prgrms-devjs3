@@ -25,15 +25,18 @@ export default class ImageInfo {
     this.render();
   }
 
-  catDetails(datas) {
+  async catDetails(datas) {
     this.loading.showLoading(true);
-    api.fetchCatDetail(datas.catData.id).then(({ data }) => {
-      this.loading.showLoading(false);
-      this.setState({
-        visible: true,
-        catData: data,
-      });
-    });
+    await api
+      .fetchCatDetail(datas.catData.id)
+      .then(({ data }) => {
+        this.setState({
+          visible: true,
+          catData: data,
+        });
+      })
+      .catch((e) => console.error(e))
+      .finally(() => this.loading.showLoading(false));
   }
 
   imageInfoDisplayNone() {

@@ -23,24 +23,32 @@ export default class App {
 
     this.searchInput = new SearchInput({
       $target,
-      onSearch: (keyword) => {
+      onSearch: async (keyword) => {
         this.loading.showLoading(true);
         this.searchResult.setKeyword(keyword);
         this.searchInput.setInputValue(keyword);
-        api.fetchCats(keyword).then(({ data }) => {
-          this.page = this.INIT_PAGE;
-          this.loading.showLoading(false);
-          this.setState(data);
-          this.setLastResult(data);
-        });
+        await api
+          .fetchCats(keyword)
+          .then(({ data }) => {
+            this.setState(data);
+            this.setLastResult(data);
+          })
+          .catch((e) => console.error(e))
+          .finally(() => {
+            this.page = this.INIT_PAGE;
+            this.loading.showLoading(false);
+          });
       },
-      onRandomSearch: () => {
+      onRandomSearch: async () => {
         this.loading.showLoading(true);
-        api.fetchCats().then(({ data }) => {
-          this.searchResult.isRandomKeyword(true);
-          this.loading.showLoading(false);
-          this.setState(data);
-        });
+        await api
+          .fetchCats()
+          .then(({ data }) => {
+            this.searchResult.isRandomKeyword(true);
+            this.setState(data);
+          })
+          .catch((e) => console.error(e))
+          .finally(() => this.loading.showLoading(false));
       },
     });
 
@@ -54,13 +62,16 @@ export default class App {
           catData: cat,
         });
       },
-      onNextPage: (recentKeyword) => {
+      onNextPage: async (recentKeyword) => {
         const nextPage = this.page + 1;
-        api.fetchCats(recentKeyword, nextPage).then(({ data }) => {
-          let newData = this.data.concat(data);
-          this.page = this.page + 1;
-          this.setState(newData);
-        });
+        await api
+          .fetchCats(recentKeyword, nextPage)
+          .then(({ data }) => {
+            let newData = [...this.data, ...data];
+            this.page = this.page + 1;
+            this.setState(newData);
+          })
+          .catch((e) => console.error(e));
       },
     });
 

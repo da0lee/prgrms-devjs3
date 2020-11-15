@@ -1,14 +1,17 @@
-class RecentKeyword {
+export default class RecentKeyword {
   $wrap = null;
   $recentKeywordUl = null;
   recentKeywords = [];
+  page = null;
+  onSearch = null;
 
-  constructor({ $target, onSearch }) {
+  constructor({ $target, page, onSearch }) {
     const $wrap = document.createElement('section');
     const $recentKeywordText = document.createElement('span');
     const $recentKeywordUl = document.createElement('ul');
     this.$recentKeywordText = $recentKeywordText;
     this.$recentKeywordUl = $recentKeywordUl;
+    this.page = page;
     this.onSearch = onSearch;
 
     $recentKeywordText.className = 'RecentKeywordText';
@@ -54,8 +57,10 @@ class RecentKeyword {
       .join('');
 
     this.$recentKeywordUl.addEventListener('click', (e) => {
+      e.stopImmediatePropagation();
       if (e.target && e.target.nodeName === 'A') {
         this.onSearch(e.target.innerHTML);
+        this.page = 1;
       }
     });
   }

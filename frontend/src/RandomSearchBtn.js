@@ -1,4 +1,4 @@
-class RandomSearchBtn {
+export default class RandomSearchBtn {
   $randomSearchBtn = null;
   onRandomSearch = null;
 

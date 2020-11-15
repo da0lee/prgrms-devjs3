@@ -1,4 +1,4 @@
-class Loading {
+export default class Loading {
   $loading = null;
   show = false;
 

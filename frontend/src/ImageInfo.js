@@ -1,4 +1,7 @@
-class ImageInfo {
+import Loading from './Loading.js';
+import api from './api.js';
+
+export default class ImageInfo {
   $imageInfo = null;
   data = null;
 

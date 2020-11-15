@@ -1,8 +1,17 @@
+import DarkLightToggle from './DarkLightToggle.js';
+import SearchInput from './SearchInput.js';
+import SearchResult from './SearchResult.js';
+import Loading from './Loading.js';
+import ImageInfo from './ImageInfo.js';
+import api from './api.js';
+
 console.log('app is running!');
 
-class App {
+export default class App {
   $target = null;
+  INIT_PAGE = 1;
   data = [];
+  page = this.INIT_PAGE;
   lastResult = null;
 
   constructor($target) {
@@ -17,7 +26,9 @@ class App {
       onSearch: (keyword) => {
         this.loading.showLoading(true);
         this.searchResult.setKeyword(keyword);
+        this.searchInput.setInputValue(keyword);
         api.fetchCats(keyword).then(({ data }) => {
+          this.page = this.INIT_PAGE;
           this.loading.showLoading(false);
           this.setState(data);
           this.setLastResult(data);
@@ -43,9 +54,11 @@ class App {
           catData: cat,
         });
       },
-      onNextPage: (recentKeyword, page) => {
-        api.fetchCats(recentKeyword, page).then(({ data }) => {
+      onNextPage: (recentKeyword) => {
+        const nextPage = this.page + 1;
+        api.fetchCats(recentKeyword, nextPage).then(({ data }) => {
           let newData = this.data.concat(data);
+          this.page = this.page + 1;
           this.setState(newData);
         });
       },
@@ -74,6 +87,10 @@ class App {
 
   setLastResult(result) {
     localStorage.setItem('lastResult', JSON.stringify(result));
+  }
+
+  setKeyword(nextKeyword) {
+    this.keyword = nextKeyword;
   }
 
   init() {

@@ -1,4 +1,4 @@
-class DarkLightToggle {
+export default class DarkLightToggle {
   $darkLightLable = null;
   $darkLightToggle = null;
   $darkLightSlider = null;

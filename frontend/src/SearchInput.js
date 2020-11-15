@@ -1,14 +1,21 @@
+import RandomSearchBtn from './RandomSearchBtn.js';
+import RecentKeyword from './RecentKeyword.js';
+
 const TEMPLATE = '<input type="text">';
-class SearchInput {
+export default class SearchInput {
   $wrap = null;
   $searchInput = null;
+  value = null;
+  onSearch = null;
+  onRandomSearch = null;
 
-  constructor({ $target, onSearch, onRandomSearch }) {
+  constructor({ $target, page, onSearch, onRandomSearch }) {
     const $wrap = document.createElement('section');
     const $searchInput = document.createElement('input');
     this.$searchInput = $searchInput;
     this.$searchInput.placeholder = '고양이를 검색해보세요.|';
     this.$searchInput.setAttribute('autofocus', 'autofocus');
+    this.page = page;
 
     $searchInput.className = 'SearchInput';
     $target.appendChild($wrap);
@@ -30,7 +37,12 @@ class SearchInput {
 
     this.recentKeyword = new RecentKeyword({
       $target,
+      page,
       onSearch,
     });
+  }
+
+  setInputValue(nextValue) {
+    this.$searchInput.value = nextValue;
   }
 }

@@ -1,11 +1,10 @@
-class SearchResult {
+export default class SearchResult {
   $wrap = null;
   $searchResult = null;
 
   data = null;
   keyword = null;
   lastResult = null;
-  page = 1;
   randomKeyword = false;
 
   onClick = null;
@@ -36,7 +35,6 @@ class SearchResult {
   }
 
   isRandomKeyword(isRandom) {
-    console.log('isRandom : ', isRandom);
     this.randomKeyword = isRandom;
   }
 
@@ -47,14 +45,14 @@ class SearchResult {
   }
 
   observer = new IntersectionObserver((items, observer) => {
-    if (this.randomKeyword) return;
+    if (!this.keyword || this.randomKeyword) return;
 
     items.forEach((item) => {
       if (item.isIntersecting) {
         let itemIndex = Number(item.target.dataset.index);
         if (itemIndex === this.data.length - 1) {
-          this.page += 1;
-          this.onNextPage(this.keyword, this.page);
+          console.log('마지막');
+          this.onNextPage(this.keyword);
         }
       }
     });

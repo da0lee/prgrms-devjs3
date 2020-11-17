@@ -30,10 +30,12 @@ export default class ImageInfo {
     await api
       .fetchCatDetail(datas.catData.id)
       .then(({ data }) => {
-        this.setState({
-          visible: true,
-          catData: data,
-        });
+        if (data) {
+          this.setState({
+            show: true,
+            catData: data,
+          });
+        }
       })
       .catch((e) => console.error(e))
       .finally(() => this.loading.showLoading(false));
@@ -58,7 +60,7 @@ export default class ImageInfo {
   }
 
   render() {
-    if (this.data.visible) {
+    if (this.data.show) {
       const { name, url, temperament, origin } = this.data.catData;
 
       this.$imageInfo.innerHTML = `

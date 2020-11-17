@@ -23,15 +23,17 @@ export default class App {
 
     this.searchInput = new SearchInput({
       $target,
-      onSearch: async (keyword) => {
+      onSearch: (keyword) => {
         this.loading.showLoading(true);
         this.searchResult.setKeyword(keyword);
         this.searchInput.setInputValue(keyword);
-        await api
+        api
           .fetchCats(keyword)
           .then(({ data }) => {
-            this.setState(data);
-            this.setLastResult(data);
+            if (data) {
+              this.setState(data);
+              this.setLastResult(data);
+            }
           })
           .catch((e) => console.error(e))
           .finally(() => {
@@ -39,13 +41,15 @@ export default class App {
             this.loading.showLoading(false);
           });
       },
-      onRandomSearch: async () => {
+      onRandomSearch: () => {
         this.loading.showLoading(true);
-        await api
+        api
           .fetchCats()
           .then(({ data }) => {
+            if (data) {
+              this.setState(data);
+            }
             this.searchResult.isRandomKeyword(true);
-            this.setState(data);
           })
           .catch((e) => console.error(e))
           .finally(() => this.loading.showLoading(false));
@@ -58,18 +62,20 @@ export default class App {
       initialData: this.data,
       onClick: (cat) => {
         this.imageInfo.catDetails({
-          visible: true,
+          show: true,
           catData: cat,
         });
       },
-      onNextPage: async (recentKeyword) => {
+      onNextPage: (recentKeyword) => {
         const nextPage = this.page + 1;
-        await api
+        api
           .fetchCats(recentKeyword, nextPage)
           .then(({ data }) => {
-            let newData = [...this.data, ...data];
+            if (data) {
+              let newData = [...this.data, ...data];
+              this.setState(newData);
+            }
             this.page = this.page + 1;
-            this.setState(newData);
           })
           .catch((e) => console.error(e));
       },
@@ -82,7 +88,7 @@ export default class App {
     this.imageInfo = new ImageInfo({
       $target,
       data: {
-        visible: false,
+        show: false,
         catData: null,
       },
     });

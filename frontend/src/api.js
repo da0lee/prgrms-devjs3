@@ -1,19 +1,16 @@
 const API_ENDPOINT = 'http://localhost:4001';
 
-const ERRORS = {
-  400: '잘못된 요청입니다.',
-  500: '요청하신 정보를 찾을 수 없습니다.',
-};
-
 const request = async (url) => {
-  const result = await fetch(url).then((res) => {
-    if (res.status === 200) {
-      return res.json();
-    } else {
-      alert(`😹 ${res.statusText} 😹 \n ${ERRORS[res.status]}`);
+  try {
+    const result = await fetch(url);
+    if (result.status === 200) {
+      return result.json();
     }
-  });
-  return result;
+    throw Error(`\n😹 ${result.statusText} 😹`);
+  } catch (error) {
+    alert(error);
+    return [];
+  }
 };
 
 const api = {

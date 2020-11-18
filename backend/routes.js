@@ -12,7 +12,7 @@ const allDataCount = JSON.parse(fs.readFileSync("data.json").toString()).length;
 const ERROR_ENCOUNT_PERCENT = 10;
 const MAX_DELAY_TIME = 3000;
 
-const getError = () => getRandomNumber(0, 100) <= ERROR_ENCOUNT_PERCENT;
+const getError = () => getRandomNumber(0, 10) <= ERROR_ENCOUNT_PERCENT;
 
 /* 필요 시 부활시킬 것
 router.get("/cats/all", (req, res) => {

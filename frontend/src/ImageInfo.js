@@ -47,7 +47,7 @@ export default class ImageInfo {
 
   bindEvents() {
     this.$imageInfo.addEventListener('click', (e) => {
-      if (e.target.className === 'close' || 'ImageInfo') {
+      if (e.target.className === 'close' || e.target.className === 'ImageInfo') {
         this.imageInfoDisplayNone();
       }
     });

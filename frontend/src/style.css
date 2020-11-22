@@ -119,14 +119,15 @@ input[type='checkbox']:checked ~ .DarkLightSlider::after {
   position: relative;
 }
 .RecentKeyword {
+  z-index: 1;
   visibility: hidden;
   position: absolute;
+  height: 40px;
   width: 100%;
   opacity: 0;
-  transition: 0.2s ease-in;
-  transform: translateY (-15px);
+  transition: all 0.2s ease;
   padding: 25px;
-  background-color: rgba(0, 0, 0, 0.8);
+  background-color: var(--background1);
 }
 
 .RecentKeyword * {
@@ -136,8 +137,8 @@ input[type='checkbox']:checked ~ .DarkLightSlider::after {
 
 .SearchInputWrap:hover .RecentKeyword {
   visibility: visible;
-  opacity: 1;
-  transform: translateY (0);
+  height: 100%;
+  opacity: 0.8;
 }
 
 .RecentKeywordText {
@@ -152,9 +153,11 @@ input[type='checkbox']:checked ~ .DarkLightSlider::after {
   border: 1px solid var(--primary);
   border-radius: 3px;
   padding: 5px 15px;
+  cursor: pointer;
 }
 .RecentKeywordUl button:hover {
   background-color: var(--primary);
+  color: var(--inverseColor);
 }
 
 .SearchInput {
@@ -192,11 +195,25 @@ input[type='checkbox']:checked ~ .DarkLightSlider::after {
 }
 
 .SearchResult .item {
+  position: relative;
   display: inline-block;
   margin: 0 0 1em;
   width: 100%;
   height: 100%;
   min-height: 400px;
+}
+
+.SearchResult .itemCover {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--background1);
+  opacity: 0.75;
+  text-align: center;
+  padding-top: 200px;
+  font-size: 20px;
 }
 
 /* Loading */
@@ -231,13 +248,21 @@ input[type='checkbox']:checked ~ .DarkLightSlider::after {
 
 /* ImageInfo */
 .ImageInfo {
+  visibility: hidden;
+  opacity: 0;
   z-index: 100;
   position: fixed;
   left: 0;
   top: 0;
   width: 100vw;
   height: 100vh;
+  transition: all 0.4s ease-in-out;
   background-color: var(--background1);
+}
+
+.ImageInfo.show {
+  visibility: visible;
+  opacity: 1;
 }
 
 .ImageInfo .title {
@@ -258,6 +283,7 @@ input[type='checkbox']:checked ~ .DarkLightSlider::after {
   position: absolute;
   right: 0;
   top: 0;
+  cursor: pointer;
 }
 
 .ImageInfo .content-wrapper {

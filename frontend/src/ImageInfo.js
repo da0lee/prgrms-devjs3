@@ -41,20 +41,20 @@ export default class ImageInfo {
       .finally(() => this.loading.showLoading(false));
   }
 
-  imageInfoDisplayNone() {
-    this.$imageInfo.style.display = 'none';
+  imageInfoFadeOut() {
+    this.$imageInfo.classList.remove('show');
   }
 
   bindEvents() {
     this.$imageInfo.addEventListener('click', (e) => {
-      if (e.target.className === 'close' || e.target.className === 'ImageInfo') {
-        this.imageInfoDisplayNone();
+      if (e.target.className === 'close' || e.target.className === 'ImageInfo show') {
+        this.imageInfoFadeOut();
       }
     });
 
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') {
-        this.imageInfoDisplayNone();
+        this.imageInfoFadeOut();
       }
     });
   }
@@ -62,7 +62,6 @@ export default class ImageInfo {
   render() {
     if (this.data.show) {
       const { name, url, temperament, origin } = this.data.catData;
-
       this.$imageInfo.innerHTML = `
         <div class="content-wrapper">
           <head class="title">
@@ -77,10 +76,11 @@ export default class ImageInfo {
             <p>태생: ${origin}</p>
           </div>
         </div>`;
-      this.$imageInfo.style.display = 'block';
       this.bindEvents();
+      this.$imageInfo.classList.add('show');
     } else {
-      this.$imageInfo.style.display = 'none';
+      this.imageInfoFadeOut();
+      this.$imageInfo.classList.remove('show');
     }
   }
 }

@@ -41,20 +41,20 @@ export default class ImageInfo {
       .finally(() => this.loading.showLoading(false));
   }
 
-  imageInfoFadeOut() {
+  imageInfoFadeEffect() {
     this.$imageInfo.classList.remove('show');
   }
 
   bindEvents() {
     this.$imageInfo.addEventListener('click', (e) => {
       if (e.target.className === 'close' || e.target.className === 'ImageInfo show') {
-        this.imageInfoFadeOut();
+        this.imageInfoFadeEffect();
       }
     });
 
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') {
-        this.imageInfoFadeOut();
+        this.imageInfoFadeEffect();
       }
     });
   }
@@ -79,8 +79,7 @@ export default class ImageInfo {
       this.bindEvents();
       this.$imageInfo.classList.add('show');
     } else {
-      this.imageInfoFadeOut();
-      this.$imageInfo.classList.remove('show');
+      this.imageInfoFadeEffect();
     }
   }
 }

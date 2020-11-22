@@ -69,6 +69,7 @@ export default class SearchResult {
           (cat, index) => `
         <li class="item" data-index=${index}>
           <img src=${cat.url} alt=${cat.name} data-index=${index} />
+          <div class="itemCover">${cat.name}</div>
         </li>
       `
         )

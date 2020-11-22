@@ -1,6 +1,7 @@
 export default class RecentKeyword {
   $wrap = null;
   $recentKeywordUl = null;
+  $recentKeywordText = null;
   recentKeywords = [];
   page = null;
   onSearch = null;
@@ -11,9 +12,11 @@ export default class RecentKeyword {
     const $recentKeywordUl = document.createElement('ul');
     this.$recentKeywordText = $recentKeywordText;
     this.$recentKeywordUl = $recentKeywordUl;
+    this.$wrap = $wrap;
     this.page = page;
     this.onSearch = onSearch;
 
+    $wrap.className = 'RecentKeyword';
     $recentKeywordText.className = 'RecentKeywordText';
     $recentKeywordUl.className = 'RecentKeywordUl';
     $target.appendChild($wrap);
@@ -53,12 +56,12 @@ export default class RecentKeyword {
     `;
 
     this.$recentKeywordUl.innerHTML = this.recentKeywords
-      .map((keyword) => `<li><a href="#">${keyword}</a></li>`)
+      .map((keyword) => `<li><button>${keyword}</button></li>`)
       .join('');
 
     this.$recentKeywordUl.addEventListener('click', (e) => {
       e.stopImmediatePropagation();
-      if (e.target && e.target.nodeName === 'A') {
+      if (e.target && e.target.nodeName === 'BUTTON') {
         this.onSearch(e.target.innerHTML);
         this.page = 1;
       }

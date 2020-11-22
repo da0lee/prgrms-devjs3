@@ -1,14 +1,20 @@
 const API_ENDPOINT = 'http://localhost:4001';
 
+const ERRORS = {
+  400: '잘못된 요청입니다.',
+  500: '서버에 오류가 발생하였습니다.',
+};
+
 const request = async (url) => {
   try {
     const result = await fetch(url);
+
     if (result.status === 200) {
       return result.json();
     }
-    throw Error(`\n😹 ${result.statusText} 😹`);
+    throw result;
   } catch (error) {
-    alert(error);
+    alert(`😹 ${error.statusText} 😹 \n ${ERRORS[error.status]}`);
     return [];
   }
 };

@@ -17,6 +17,7 @@ export default class SearchInput {
     this.$searchInput.setAttribute('autofocus', true);
     this.page = page;
 
+    $wrap.className = 'SearchInputWrap';
     $searchInput.className = 'SearchInput';
     $target.appendChild($wrap);
     $wrap.appendChild($searchInput);
@@ -36,7 +37,7 @@ export default class SearchInput {
     });
 
     this.recentKeyword = new RecentKeyword({
-      $target,
+      $target: $wrap,
       page,
       onSearch,
     });

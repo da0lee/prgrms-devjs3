@@ -115,6 +115,48 @@ input[type='checkbox']:checked ~ .DarkLightSlider::after {
 }
 
 /* SearchInput */
+.SearchInputWrap {
+  position: relative;
+}
+.RecentKeyword {
+  visibility: hidden;
+  position: absolute;
+  width: 100%;
+  opacity: 0;
+  transition: 0.2s ease-in;
+  transform: translateY (-15px);
+  padding: 25px;
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.RecentKeyword * {
+  float: left;
+  background-color: transparent;
+}
+
+.SearchInputWrap:hover .RecentKeyword {
+  visibility: visible;
+  opacity: 1;
+  transform: translateY (0);
+}
+
+.RecentKeywordText {
+  margin-right: 10px;
+}
+
+.RecentKeywordUl li {
+  padding: 0 10px;
+}
+
+.RecentKeywordUl button {
+  border: 1px solid var(--primary);
+  border-radius: 3px;
+  padding: 5px 15px;
+}
+.RecentKeywordUl button:hover {
+  background-color: var(--primary);
+}
+
 .SearchInput {
   width: 90%;
   font-size: 40px;

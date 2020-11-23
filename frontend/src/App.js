@@ -1,12 +1,12 @@
 import DarkLightToggle from './DarkLightToggle.js';
 import SearchInput from './SearchInput.js';
+import RandomSlider from './RandomSlider.js';
 import SearchResult from './SearchResult.js';
 import Loading from './Loading.js';
 import ImageInfo from './ImageInfo.js';
 import api from './api.js';
 
 console.log('app is running!');
-
 export default class App {
   $target = null;
   INIT_PAGE = 1;
@@ -54,6 +54,10 @@ export default class App {
           .catch((e) => console.error(e))
           .finally(() => this.loading.showLoading(false));
       },
+    });
+
+    this.randomSlider = new RandomSlider({
+      $target,
     });
 
     this.searchResult = new SearchResult({

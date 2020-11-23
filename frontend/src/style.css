@@ -15,6 +15,10 @@ li {
   list-style: none;
 }
 
+img {
+  display: block;
+}
+
 :root[color-mode='light'] {
   --background1: #fff;
   --background2: #e6e6e6;
@@ -166,6 +170,46 @@ input[type='checkbox']:checked ~ .DarkLightSlider::after {
   padding: 10px 15px;
   background-color: var(--background1);
   color: var(--color);
+}
+
+/* RandomBanner */
+.SliderWrap {
+  position: relative;
+  margin: 0 auto;
+  width: 1200px;
+}
+.InenrWrap {
+  overflow: hidden;
+  position: relative;
+  height: 350px;
+}
+.Slider {
+  width: 6000px;
+  position: absolute;
+  transition: all 0.4s ease-in-out;
+}
+.Slider li {
+  float: left;
+}
+.SliderWrap .SliderBtns .Prev {
+  position: absolute;
+  top: 45%;
+  left: 0;
+}
+.SliderWrap .SliderBtns .Next {
+  position: absolute;
+  top: 45%;
+  right: 0;
+}
+
+.SliderBtns button {
+  width: 40px;
+  height: 40px;
+  background-color: var(--background1);
+  border-radius: 50%;
+  font-size: 17px;
+  color: var(--primary);
+  font-size: 20px;
 }
 
 /* SearchResult */

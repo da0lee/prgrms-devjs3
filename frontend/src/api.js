@@ -20,8 +20,8 @@ const request = async (url) => {
 };
 
 const api = {
-  fetchCats: (keyword, page = 1) => {
-    return request(`${API_ENDPOINT}/api/cats/search?q=${keyword}&page=${page}`);
+  fetchCats: (keyword, limit = 25, page = 1) => {
+    return request(`${API_ENDPOINT}/api/cats/search?q=${keyword}&limit=${limit}&page=${page}`);
   },
 
   fetchRandomCats: () => {

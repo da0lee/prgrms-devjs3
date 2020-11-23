@@ -1,4 +1,5 @@
 import RandomSearchBtn from './RandomSearchBtn.js';
+import SelectLimitResults from './SelectLimitResults.js';
 import RecentKeyword from './RecentKeyword.js';
 
 const TEMPLATE = '<input type="text">';
@@ -6,6 +7,8 @@ export default class SearchInput {
   $wrap = null;
   $searchInput = null;
   value = null;
+  limit = 25;
+  page = null;
   onSearch = null;
   onRandomSearch = null;
 
@@ -24,12 +27,20 @@ export default class SearchInput {
 
     $searchInput.addEventListener('keypress', (e) => {
       if (e.key === 'Enter') {
-        onSearch(e.target.value);
+        onSearch(e.target.value, this.limit);
         this.recentKeyword.setRecentKeywords(e.target.value);
       }
     });
 
     $searchInput.addEventListener('click', (e) => (e.target.value = ''));
+
+    this.selectLimitResults = new SelectLimitResults({
+      $target: $wrap,
+      $searchInput,
+      setLimit: (nextLimit) => {
+        this.limit = nextLimit;
+      },
+    });
 
     this.randomSearchBtn = new RandomSearchBtn({
       $target: $wrap,
@@ -39,6 +50,7 @@ export default class SearchInput {
     this.recentKeyword = new RecentKeyword({
       $target: $wrap,
       page,
+      limit: this.limit,
       onSearch,
     });
   }

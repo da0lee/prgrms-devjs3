@@ -161,7 +161,7 @@ input[type='checkbox']:checked ~ .DarkLightSlider::after {
 }
 
 .SearchInput {
-  width: 90%;
+  width: 83%;
   font-size: 40px;
   padding: 10px 15px;
   background-color: var(--background1);
@@ -175,6 +175,14 @@ input[type='checkbox']:checked ~ .DarkLightSlider::after {
   display: grid;
   grid-template-columns: repeat(4, minmax(250px, 1fr));
   grid-gap: 10px;
+}
+
+.SelectLimitResults {
+  width: 7%;
+  height: 78px;
+  vertical-align: top;
+  font-size: 20px;
+  cursor: pointer;
 }
 
 .RandomSearchBtn {

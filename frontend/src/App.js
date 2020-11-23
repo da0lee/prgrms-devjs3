@@ -23,12 +23,12 @@ export default class App {
 
     this.searchInput = new SearchInput({
       $target,
-      onSearch: (keyword) => {
+      onSearch: (keyword, limit) => {
         this.loading.showLoading(true);
         this.searchResult.setKeyword(keyword);
         this.searchInput.setInputValue(keyword);
         api
-          .fetchCats(keyword)
+          .fetchCats(keyword, limit)
           .then(({ data }) => {
             if (data) {
               this.setState(data);
@@ -68,8 +68,9 @@ export default class App {
       },
       onNextPage: (recentKeyword) => {
         const nextPage = this.page + 1;
+        const limit = this.searchInput.limit;
         api
-          .fetchCats(recentKeyword, nextPage)
+          .fetchCats(recentKeyword, limit, nextPage)
           .then(({ data }) => {
             if (data) {
               let newData = [...this.data, ...data];

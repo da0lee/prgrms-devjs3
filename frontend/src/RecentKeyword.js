@@ -3,10 +3,11 @@ export default class RecentKeyword {
   $recentKeywordUl = null;
   $recentKeywordText = null;
   recentKeywords = [];
+  limit = null;
   page = null;
   onSearch = null;
 
-  constructor({ $target, page, onSearch }) {
+  constructor({ $target, page, limit, onSearch }) {
     const $wrap = document.createElement('section');
     const $recentKeywordText = document.createElement('span');
     const $recentKeywordUl = document.createElement('ul');
@@ -14,6 +15,7 @@ export default class RecentKeyword {
     this.$recentKeywordUl = $recentKeywordUl;
     this.$wrap = $wrap;
     this.page = page;
+    this.limit = limit;
     this.onSearch = onSearch;
 
     $wrap.className = 'RecentKeyword';
@@ -61,8 +63,9 @@ export default class RecentKeyword {
 
     this.$recentKeywordUl.addEventListener('click', (e) => {
       e.stopImmediatePropagation();
-      if (e.target && e.target.nodeName === 'BUTTON') {
-        this.onSearch(e.target.innerHTML);
+      if (e.target?.nodeName === 'BUTTON') {
+        this.onSearch(e.target.innerHTML, this.limit);
+        console.log(this.limit);
         this.page = 1;
       }
     });

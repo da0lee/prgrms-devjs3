@@ -59,9 +59,7 @@ export default class SearchResult {
   });
 
   render() {
-    if (this.keyword == null && (this.lastResult == null || this.lastResult.length == 0)) {
-      return;
-    }
+    if (this.keyword === null && (this.lastResult === null || this.lastResult.length === 0)) return;
 
     if (this.data?.length > 0) {
       this.$searchResult.innerHTML = this.data

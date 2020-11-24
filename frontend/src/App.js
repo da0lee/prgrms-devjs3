@@ -44,7 +44,7 @@ export default class App {
       onRandomSearch: () => {
         this.loading.showLoading(true);
         api
-          .fetchCats()
+          .fetchRandomCats()
           .then(({ data }) => {
             if (data) {
               this.setState(data);

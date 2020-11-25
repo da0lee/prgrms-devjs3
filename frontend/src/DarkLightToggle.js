@@ -31,12 +31,12 @@ export default class DarkLightToggle {
   initColorMode() {
     this.isDarkMode = window.matchMedia('(prefers-color-scheme: Dark)').matches ? 'dark' : 'light';
     this.userColorMode = localStorage.getItem('color-mode');
-    if (this.isDarkMode === 'dark' && this.userColorMode === 'light') {
-      this.$darkLightToggle.checked = false;
-    } else if (this.isDarkMode === 'dark') {
-      this.$darkLightToggle.checked = true;
+
+    if (this.userColorMode) {
+      this.isDarkMode = this.userColorMode;
     }
-    document.documentElement.setAttribute('color-mode', this.userColorMode ? this.userColorMode : this.isDarkMode);
+    this.$darkLightToggle.checked = this.isDarkMode === 'dark';
+    document.documentElement.setAttribute('color-mode', this.isDarkMode);
   }
 
   setColorMode(ischecked) {

@@ -70,7 +70,7 @@ export default class RandomSlider {
     api
       .fetchRandomCats()
       .then(({ data }) => {
-        this.setState(data?.slice(0, 5));
+        this.setState(data ? data.slice(0, 5) : []);
       })
       .catch((e) => console.error(e));
   }

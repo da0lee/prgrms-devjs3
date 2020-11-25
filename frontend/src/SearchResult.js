@@ -48,18 +48,17 @@ export default class SearchResult {
     if (!this.keyword || this.randomKeyword) return;
 
     items.forEach((item) => {
-      if (item.isIntersecting) {
-        let itemIndex = Number(item.target.dataset.index);
-        if (itemIndex === this.data.length - 1) {
-          console.log('마지막');
-          this.onNextPage(this.keyword);
-        }
+      if (!item.isIntersecting) return;
+      let itemIndex = Number(item.target.dataset.index);
+      if (itemIndex === this.data.length - 1) {
+        console.log('마지막');
+        this.onNextPage(this.keyword);
       }
     });
   });
 
   render() {
-    if (this.keyword === null && (this.lastResult === null || this.lastResult.length === 0)) return;
+    if (this.keyword === undefined && (this.lastResult === null || this.lastResult.length === 0)) return;
 
     if (this.data?.length > 0) {
       this.$searchResult.innerHTML = this.data

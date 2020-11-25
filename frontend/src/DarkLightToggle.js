@@ -2,7 +2,7 @@ export default class DarkLightToggle {
   $darkLightLable = null;
   $darkLightToggle = null;
   $darkLightSlider = null;
-  osDarkMode = null;
+  isDarkMode = null;
   userColorMode = null;
 
   constructor({ $target }) {
@@ -21,22 +21,27 @@ export default class DarkLightToggle {
     $darkLightLable.appendChild($darkLightToggle);
     $darkLightLable.appendChild($darkLightSlider);
 
-    this.initColorMode();
-
-    $darkLightToggle.addEventListener('click', () => {
-      this.setColorMode();
+    $darkLightToggle.addEventListener('change', (e) => {
+      this.setColorMode(e.target.checked);
     });
+
+    this.initColorMode();
   }
 
   initColorMode() {
-    this.osDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: Dark)').matches ? 'dark' : 'light';
+    this.isDarkMode = window.matchMedia('(prefers-color-scheme: Dark)').matches ? 'dark' : 'light';
     this.userColorMode = localStorage.getItem('color-mode');
-    document.documentElement.setAttribute('color-mode', this.userColorMode ? this.userColorMode : this.osDarkMode);
+    if (this.isDarkMode === 'dark' && this.userColorMode === 'light') {
+      this.$darkLightToggle.checked = false;
+    } else if (this.isDarkMode === 'dark') {
+      this.$darkLightToggle.checked = true;
+    }
+    document.documentElement.setAttribute('color-mode', this.userColorMode ? this.userColorMode : this.isDarkMode);
   }
 
-  setColorMode() {
-    this.userColorMode = this.userColorMode === 'light' ? 'dark' : 'light';
-    document.documentElement.setAttribute('color-mode', this.userColorMode);
+  setColorMode(ischecked) {
+    this.userColorMode = ischecked ? 'dark' : 'light';
     localStorage.setItem('color-mode', this.userColorMode);
+    document.documentElement.setAttribute('color-mode', ischecked ? 'dark' : 'light');
   }
 }

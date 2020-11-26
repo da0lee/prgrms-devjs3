@@ -45,8 +45,6 @@ export default class SearchResult {
   }
 
   observer = new IntersectionObserver((items, observer) => {
-    if (!this.keyword || this.randomKeyword) return;
-
     items.forEach((item) => {
       if (!item.isIntersecting) return;
       let itemIndex = Number(item.target.dataset.index);
@@ -82,6 +80,7 @@ export default class SearchResult {
       this.onClick(this.data[e.target.parentNode.dataset.index]);
     });
 
+    if (!this.keyword || this.randomKeyword) return;
     this.$searchResult.querySelectorAll('.item').forEach(($item) => this.observer.observe($item));
   }
 }

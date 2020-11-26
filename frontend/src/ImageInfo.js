@@ -27,18 +27,18 @@ export default class ImageInfo {
 
   async catDetails(datas) {
     this.loading.showLoading(true);
-    await api
-      .fetchCatDetail(datas.catData.id)
-      .then(({ data }) => {
-        if (data) {
-          this.setState({
-            show: true,
-            catData: data,
-          });
-        }
-      })
-      .catch((e) => console.error(e))
-      .finally(() => this.loading.showLoading(false));
+    const result = await api.fetchCatDetail(datas.catData.id);
+    try {
+      this.setState({
+        show: true,
+        catData: result,
+      });
+
+      throw result;
+    } catch (error) {
+      console.error(error);
+    }
+    this.loading.showLoading(false);
   }
 
   imageInfoFadeEffect() {
@@ -60,8 +60,11 @@ export default class ImageInfo {
   }
 
   render() {
+    console.log(this.data);
     if (this.data.show) {
-      const { name, url, temperament, origin } = this.data.catData;
+      const {
+        data: { name, url, temperament, origin },
+      } = this.data.catData;
       this.$imageInfo.innerHTML = `
         <div class="content-wrapper">
           <head class="title">

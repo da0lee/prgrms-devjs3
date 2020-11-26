@@ -72,7 +72,7 @@ export default class App {
       },
       onNextPage: (recentKeyword) => {
         const nextPage = this.page + 1;
-        const limit = this.searchInput.limit;
+        const { limit } = this.searchInput;
         api
           .fetchCats(recentKeyword, limit, nextPage)
           .then(({ data }) => {

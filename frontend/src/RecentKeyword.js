@@ -58,12 +58,12 @@ export default class RecentKeyword {
     `;
 
     this.$recentKeywordUl.innerHTML = this.recentKeywords
-      .map((keyword) => `<li><button>${keyword}</button></li>`)
+      .map((keyword) => `<li><button class="recentKeywordBtn">${keyword}</button></li>`)
       .join('');
 
     this.$recentKeywordUl.addEventListener('click', (e) => {
       e.stopImmediatePropagation();
-      if (e.target?.nodeName === 'BUTTON') {
+      if (e.target?.className === 'recentKeywordBtn') {
         this.onSearch(e.target.innerHTML, this.limit);
         console.log(this.limit);
         this.page = 1;
